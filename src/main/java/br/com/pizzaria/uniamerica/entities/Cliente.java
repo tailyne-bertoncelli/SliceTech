@@ -5,6 +5,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_clientes",schema = "public")
@@ -23,4 +26,9 @@ public class Cliente extends AbstractEntity{
     @Setter
     @Column(name = "nome")
     private String nome;
+
+    @OneToMany(mappedBy = "cliente")
+    @Getter
+    @Setter
+    private List<Pedido> pedidoList = new ArrayList<>();
 }
