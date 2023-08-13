@@ -8,18 +8,19 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+@Table(name = "tb_estoqueProduto", schema = "public")
 @Entity
-@Table(name = "tb_endereco", schema = "public")
 @NoArgsConstructor
 @AllArgsConstructor
-public class Endereco extends AbstractEntity{
+public class EstoqueProduto extends AbstractEntity{
+
     @Getter @Setter
-    @Column(name = "logradouro")
-    private String logradouro;
+    @Column(name = "nome")
+    private String nome;
     @Getter @Setter
-    @Column(name = "numero")
-    private int numero;
+    @Column(name = "valor")
+    private double valor;
     @Getter @Setter
-    @Column(name = "cep")
-    private String cep;
+    @Column(name = "estoque")
+    private int estoque;
 }

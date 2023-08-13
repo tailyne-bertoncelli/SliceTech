@@ -9,7 +9,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Table
-@Entity(name = "gerencia")
+@Entity(name = "tb_gerencia")
 public class Gerecia extends AbstractEntity{
     @Getter @Setter
     @Column(name = "relatoriosGerados")
