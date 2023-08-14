@@ -6,6 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
+/**
+ * Author : Cristovao Martins
+ */
+
 @Entity
 @Table(name = "tb_usuarios",schema = "public")
 @NoArgsConstructor

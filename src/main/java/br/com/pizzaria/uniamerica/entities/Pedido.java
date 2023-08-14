@@ -6,7 +6,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
-
+/**
+ * Author : Cristovao Martins
+ */
 @Entity
 @Table(name = "tb_pedidos",schema = "public")
 @NoArgsConstructor

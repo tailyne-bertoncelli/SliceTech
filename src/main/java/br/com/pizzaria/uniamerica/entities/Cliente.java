@@ -8,6 +8,10 @@ import lombok.Setter;
 import java.util.ArrayList;
 import java.util.List;
 
+
+/**
+ * Author: Cristovão Martins
+ */
 @NoArgsConstructor
 @Entity
 @Table(name = "tb_clientes",schema = "public")
