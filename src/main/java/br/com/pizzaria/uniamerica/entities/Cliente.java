@@ -21,11 +21,11 @@ public class Cliente extends AbstractEntity{
     @OneToOne
     @PrimaryKeyJoinColumn(name = "usuario_id")
     private Usuario usuario;
-//    @Getter
-//    @Setter
-//    @ManyToOne
-//    @JoinColumn(name = "endereco_id")
-//    private Endereco endereco;
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "endereco_id")
+    private Endereco endereco;
     @Getter
     @Setter
     @Column(name = "nome")

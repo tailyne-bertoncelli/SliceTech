@@ -16,9 +16,11 @@ public class Pedido extends AbstractEntity{
 //    @Getter
 //    @Setter
 //    private Tamanho tamanhoPizza;
-//    @Getter
-//    @Setter
-//    private Pizza pizza;
+    @Getter
+    @Setter
+    @ManyToOne
+    @JoinColumn(name = "pizza_id")
+    private Pizza pizza;
     @Getter
     @Setter
     @Column(name = "sabor")
