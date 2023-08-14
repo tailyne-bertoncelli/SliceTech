@@ -22,4 +22,7 @@ public class Endereco extends AbstractEntity{
     @Getter @Setter
     @Column(name = "cep")
     private String cep;
+    @Getter @Setter
+    @Column(name = "complemento")
+    private String complemento;
 }
