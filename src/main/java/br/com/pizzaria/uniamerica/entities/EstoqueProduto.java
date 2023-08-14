@@ -1,5 +1,6 @@
 package br.com.pizzaria.uniamerica.entities;
 
+import br.com.pizzaria.uniamerica.dto.estoqueProdutoDTOs.EstoqueProdutoDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -23,4 +24,10 @@ public class EstoqueProduto extends AbstractEntity{
     @Getter @Setter
     @Column(name = "estoque")
     private int estoque;
+
+    public EstoqueProduto(EstoqueProdutoDTO estoqueProdutoDTO) {
+        this.nome = nome;
+        this.valor = valor;
+        this.estoque = estoque;
+    }
 }
