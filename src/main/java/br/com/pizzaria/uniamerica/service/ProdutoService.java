@@ -1,5 +1,6 @@
 package br.com.pizzaria.uniamerica.service;
 
+import br.com.pizzaria.uniamerica.dto.estoqueProdutoDTOs.EstoqueProdutoDTO;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDTO;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDetalhesDTO;
 import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
@@ -34,19 +35,20 @@ public class ProdutoService {
         EstoqueProduto estoqueProduto = this.estoqueProdutoRepository.getReferenceById(produtoDTO.getEstoqueProduto_id());
         Produto produto = new Produto(estoqueProduto, produtoDTO.getQuantidade(), produtoDTO.getValorTotalProduto());
         this.produtoRepository.save(produto);
-        return new ProdutoDetalhesDTO(produto.getProduto(), produto.getQuantidade(), produto.getValorTotalProduto());
+        EstoqueProdutoDTO estoqueProdutoDTO = new EstoqueProdutoDTO(produto.getProduto().getNome(), produto.getValorTotalProduto(), produto.getQuantidade());
+        return new ProdutoDetalhesDTO(estoqueProdutoDTO, produto.getQuantidade(), produto.getValorTotalProduto());
     }
 
     public ProdutoDetalhesDTO altera(Produto produto){
         Produto produtoAlterado = this.produtoRepository.getReferenceById(produto.getId());
         this.produtoRepository.save(produtoAlterado);
-        return new ProdutoDetalhesDTO(produto.getProduto(), produto.getQuantidade(), produtoAlterado.getValorTotalProduto());
+        EstoqueProdutoDTO estoqueProdutoDTO = new EstoqueProdutoDTO(produto.getProduto().getNome(), produto.getValorTotalProduto(), produto.getQuantidade());
+        return new ProdutoDetalhesDTO(estoqueProdutoDTO, produto.getQuantidade(), produtoAlterado.getValorTotalProduto());
     }
 
-    public ProdutoDetalhesDTO desativa(Long id){
+    public void desativa(Long id){
         Produto produto = this.produtoRepository.getReferenceById(id);
         produto.setAtivo(false);
         this.produtoRepository.save(produto);
-        return new ProdutoDetalhesDTO(produto.getProduto(), produto.getQuantidade(), produto.getValorTotalProduto());
     }
 }
