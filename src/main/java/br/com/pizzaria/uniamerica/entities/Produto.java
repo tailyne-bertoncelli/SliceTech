@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+
 @Table(name = "tb_produto", schema = "public")
 @Entity
 @AllArgsConstructor
@@ -21,4 +22,10 @@ public class Produto extends AbstractEntity {
     @Getter @Setter
     @Column(name = "valor_total")
     private double valorTotalProduto;
+
+    public Produto(EstoqueProduto produto, int quantidade, double valorTotalProduto) {
+        this.produto = produto;
+        this.quantidade = quantidade;
+        this.valorTotalProduto = valorTotalProduto;
+    }
 }
