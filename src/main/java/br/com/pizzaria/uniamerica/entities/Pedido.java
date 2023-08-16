@@ -15,10 +15,7 @@ import java.util.List;
 @Table(name = "tb_pedidos",schema = "public")
 @NoArgsConstructor
 public class Pedido extends AbstractEntity{
-    @Getter
-    @Setter
-    @Enumerated(EnumType.STRING)
-    private TamanhoPizza tamanhoPizza;
+
     @Getter
     @Setter
     @ManyToOne

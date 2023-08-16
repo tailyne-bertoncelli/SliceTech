@@ -1,5 +1,6 @@
 package br.com.pizzaria.uniamerica.entities;
 
+import br.com.pizzaria.uniamerica.dto.pizzaDTOs.PizzaDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,5 +25,13 @@ public class Pizza extends AbstractEntity {
     private double valor;
 
     @Enumerated(EnumType.STRING)
+    @Getter @Setter
     private TamanhoPizza tamanhoPizza;
+
+    public Pizza(PizzaDTO pizzaDTO) {
+        this.sabor = pizzaDTO.getSabor();
+        this.descricao = pizzaDTO.getDescricao();
+        this.valor = pizzaDTO.getValor();
+        this.tamanhoPizza = pizzaDTO.getTamanhoPizza();
+    }
 }

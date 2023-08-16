@@ -1,5 +1,6 @@
 package br.com.pizzaria.uniamerica.entities;
 
+import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Table;
@@ -25,4 +26,11 @@ public class Endereco extends AbstractEntity{
     @Getter @Setter
     @Column(name = "complemento")
     private String complemento;
+
+    public Endereco(EnderecoDTO enderecoDTO) {
+        this.logradouro = enderecoDTO.getLogradouro();
+        this.numero = enderecoDTO.getNumero();
+        this.cep = enderecoDTO.getCep();
+        this.complemento = enderecoDTO.getComplemento();
+    }
 }
