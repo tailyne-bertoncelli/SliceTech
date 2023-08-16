@@ -3,5 +3,5 @@ package br.com.pizzaria.uniamerica.repository;
 import br.com.pizzaria.uniamerica.entities.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 
-public interface UsuarioRepository extends JpaRepository<Long, Usuario> {
+public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
 }
