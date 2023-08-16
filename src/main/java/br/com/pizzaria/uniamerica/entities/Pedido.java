@@ -6,6 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Author : Cristovao Martins
  */
@@ -13,9 +15,10 @@ import java.util.ArrayList;
 @Table(name = "tb_pedidos",schema = "public")
 @NoArgsConstructor
 public class Pedido extends AbstractEntity{
-//    @Getter
-//    @Setter
-//    private Tamanho tamanhoPizza;
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private TamanhoPizza tamanhoPizza;
     @Getter
     @Setter
     @ManyToOne
@@ -46,7 +49,8 @@ public class Pedido extends AbstractEntity{
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-//    @Getter
-//    @Setter
-//    private List<Produtos> produtosList = new ArrayList<>();
+    @Getter
+    @Setter
+    @OneToMany
+    private List<Produto> produtosList = new ArrayList<>();
 }
