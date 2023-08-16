@@ -1,5 +1,7 @@
 package br.com.pizzaria.uniamerica.dto.usuarioDTOs;
 
+import br.com.pizzaria.uniamerica.entities.Produto;
+import br.com.pizzaria.uniamerica.entities.Usuario;
 import jakarta.persistence.Column;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -7,7 +9,9 @@ import lombok.Setter;
 
 @NoArgsConstructor
 public class UsuarioDTO {
-
+    @Getter
+    @Setter
+    private Long id;
     @Getter
     @Setter
     private String login;
@@ -23,4 +27,12 @@ public class UsuarioDTO {
         this.senha = senha;
         this.email = email;
     }
+    public UsuarioDTO(Usuario entity) {
+        id = entity.getId();
+        login = entity.getLogin();
+        senha = entity.getSenha();
+        email = entity.getEmail();
+    }
+
+
 }

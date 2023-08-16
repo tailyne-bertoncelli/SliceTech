@@ -17,6 +17,7 @@ import java.util.List;
 public class Pedido extends AbstractEntity{
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
     private TamanhoPizza tamanhoPizza;
     @Getter
     @Setter
@@ -50,5 +51,6 @@ public class Pedido extends AbstractEntity{
     private Cliente cliente;
     @Getter
     @Setter
+    @OneToMany
     private List<Produto> produtosList = new ArrayList<>();
 }

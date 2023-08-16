@@ -9,7 +9,6 @@ import lombok.Setter;
 
 @Table(name = "tb_produto", schema = "public")
 @Entity
-
 @NoArgsConstructor
 public class Produto extends AbstractEntity {
     @Getter @Setter
