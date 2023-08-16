@@ -1,6 +1,7 @@
 package br.com.pizzaria.uniamerica.dto.clienteDTOs;
 
 
+import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
 import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 import br.com.pizzaria.uniamerica.entities.Endereco;
 import br.com.pizzaria.uniamerica.entities.Pedido;
