@@ -44,7 +44,7 @@ public class Pedido extends AbstractEntity{
     private boolean entrega;
     @Getter
     @Setter
-    @Column(name = "sitaucao")
+    @Column(name = "situacao")
     private boolean situacao; //Possivel alteracao de nome por nao esclarecimento de nome de varaivel
     @Getter
     @Setter
