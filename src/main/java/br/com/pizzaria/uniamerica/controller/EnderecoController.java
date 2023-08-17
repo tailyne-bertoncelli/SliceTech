@@ -6,6 +6,7 @@ import br.com.pizzaria.uniamerica.service.EnderecoService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,8 +33,8 @@ public class EnderecoController {
         }
     }
 
-    @PostMapping @Transactional
-    public ResponseEntity<?> cadastra(@RequestBody EnderecoDTO enderecoDTO){
+    @PostMapping
+    public ResponseEntity<?> cadastra(@RequestBody @Validated EnderecoDTO enderecoDTO){
         try {
             return ResponseEntity.ok(this.enderecoService.cadastra(enderecoDTO));
         } catch (Exception e){
@@ -41,8 +42,8 @@ public class EnderecoController {
         }
     }
 
-    @PutMapping("/altera") @Transactional
-    public ResponseEntity<?> altera(@RequestBody Endereco endereco){
+    @PutMapping("/altera")
+    public ResponseEntity<?> altera(@RequestBody @Validated Endereco endereco){
         try {
             return ResponseEntity.ok(this.enderecoService.altera(endereco));
         } catch (Exception e){
@@ -50,7 +51,7 @@ public class EnderecoController {
         }
     }
 
-    @PutMapping("/desativa/{id}") @Transactional
+    @PutMapping("/desativa/{id}")
     public ResponseEntity<?> desativa(@PathVariable Long id){
         try {
             this.enderecoService.desativa(id);

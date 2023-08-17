@@ -4,8 +4,6 @@ import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.Optional;
-
 public class EstoqueProdutoDTO {
     @Getter @Setter
     private String nome;
@@ -14,10 +12,10 @@ public class EstoqueProdutoDTO {
     @Getter @Setter
     private int estoque;
 
-    public EstoqueProdutoDTO(Optional<EstoqueProduto> estoqueProduto) {
-        this.nome = estoqueProduto.get().getNome();
-        this.valor = estoqueProduto.get().getValor();
-        this.estoque = estoqueProduto.get().getEstoque();
+    public EstoqueProdutoDTO(EstoqueProduto estoqueProduto) {
+        this.nome = estoqueProduto.getNome();
+        this.valor = estoqueProduto.getValor();
+        this.estoque = estoqueProduto.getEstoque();
     }
 
     public EstoqueProdutoDTO(String nome, double valor, int estoque) {

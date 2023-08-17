@@ -16,7 +16,8 @@ public class EnderecoService {
     private EnderecoRepository enderecoRepository;
 
     public EnderecoDTO findById(Long id){
-        Optional<Endereco> enderecoDTO = this.enderecoRepository.findById(id);
+        Endereco enderecoDTO = this.enderecoRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("ID não encontrado"));
         return new EnderecoDTO(enderecoDTO);
     }
 
@@ -27,18 +28,26 @@ public class EnderecoService {
 
     @Transactional
     public EnderecoDTO cadastra(EnderecoDTO enderecoDTO){
+        if (enderecoDTO.getNumero() == null || enderecoDTO.getNumero() == 0){
+            throw new RuntimeException("O numero não pode ser 0 ou nullo");
+        }
         Endereco endereco = new Endereco(enderecoDTO);
         this.enderecoRepository.save(endereco);
         return enderecoDTO;
     }
     @Transactional
     public EnderecoDTO altera(Endereco endereco){
-        Endereco endereco1 = this.enderecoRepository.getReferenceById(endereco.getId());
+        Endereco endereco1 = this.enderecoRepository.findById(endereco.getId())
+                .orElseThrow(() -> new RuntimeException("ID não encontrado"));
 
         endereco1.setLogradouro(endereco.getLogradouro());
         endereco1.setNumero(endereco.getNumero());
         endereco1.setCep(endereco.getCep());
         endereco1.setComplemento(endereco.getComplemento());
+
+        if (endereco1.getNumero() == null || endereco1.getNumero() == 0){
+            throw new RuntimeException("O numero não pode ser 0 ou nullo");
+        }
 
         this.enderecoRepository.save(endereco1);
         EnderecoDTO enderecoDTO = new EnderecoDTO(endereco1);

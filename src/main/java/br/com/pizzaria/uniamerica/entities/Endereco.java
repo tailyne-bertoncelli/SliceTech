@@ -19,7 +19,7 @@ public class Endereco extends AbstractEntity{
     private String logradouro;
     @Getter @Setter
     @Column(name = "numero")
-    private int numero;
+    private Long numero;
     @Getter @Setter
     @Column(name = "cep")
     private String cep;

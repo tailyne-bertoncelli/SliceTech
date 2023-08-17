@@ -16,8 +16,8 @@ public class EstoqueProdutoService {
     private EstoqueProdutoRepository repository;
 
     public EstoqueProdutoDTO findById(Long id){
-        Optional<EstoqueProduto> estoqueProduto = repository.findById(id);
-        estoqueProduto.orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        EstoqueProduto estoqueProduto = repository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         return new EstoqueProdutoDTO(estoqueProduto);
     }
 
