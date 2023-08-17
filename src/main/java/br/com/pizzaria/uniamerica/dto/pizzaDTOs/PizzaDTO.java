@@ -3,10 +3,12 @@ package br.com.pizzaria.uniamerica.dto.pizzaDTOs;
 import br.com.pizzaria.uniamerica.entities.Pizza;
 import br.com.pizzaria.uniamerica.entities.TamanhoPizza;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Optional;
 
+@NoArgsConstructor
 public class PizzaDTO {
     @Getter @Setter
     private String sabor;
