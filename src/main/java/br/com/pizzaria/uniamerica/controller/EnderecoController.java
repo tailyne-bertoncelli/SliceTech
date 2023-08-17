@@ -15,7 +15,7 @@ public class EnderecoController {
     private EnderecoService enderecoService;
 
     @GetMapping
-    public ResponseEntity<?> buscaPeloId(@RequestBody Long id){
+    public ResponseEntity<?> buscaPeloId(@RequestParam Long id){
         try {
             return ResponseEntity.ok(this.enderecoService.findById(id));
         } catch (Exception e){
@@ -41,7 +41,7 @@ public class EnderecoController {
         }
     }
 
-    @PutMapping @Transactional
+    @PutMapping("/altera") @Transactional
     public ResponseEntity<?> altera(@RequestBody Endereco endereco){
         try {
             return ResponseEntity.ok(this.enderecoService.altera(endereco));
@@ -50,8 +50,8 @@ public class EnderecoController {
         }
     }
 
-    @PutMapping @Transactional
-    public ResponseEntity<?> desativa(@RequestBody Long id){
+    @PutMapping("/desativa/{id}") @Transactional
+    public ResponseEntity<?> desativa(@PathVariable Long id){
         try {
             this.enderecoService.desativa(id);
             return ResponseEntity.ok("Endereço desativado com sucesso!");
