@@ -3,8 +3,10 @@ package br.com.pizzaria.uniamerica.entities;
 public enum TipoRelatorio {
     PEDIDOSDIARIOS("Pedidos diarios"),
     PEDIDOSENCERRADOS("Pedidos encerrados"),
-    PEDIDOSENTREGUES("Pedidos entregues"),
-    TOTALFATURAMENTO("Total faturamento");
+    PEDIDOSENTREGA("Pedidos entrega"),
+    PEDIDOSRETIRA("Pedidos retira"),
+    TOTALCARTAO("Total cartão"),
+    TOTALDINHEIRO("Total dinheiro");
 
     TipoRelatorio(String relatorio) {
     }
