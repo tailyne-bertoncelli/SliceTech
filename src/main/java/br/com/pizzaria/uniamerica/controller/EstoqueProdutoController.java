@@ -6,6 +6,7 @@ import br.com.pizzaria.uniamerica.service.EstoqueProdutoService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,8 +33,8 @@ public class EstoqueProdutoController {
         }
     }
 
-    @PostMapping @Transactional
-    public ResponseEntity<?> cadastra(@RequestBody EstoqueProdutoDTO estoqueProdutoDTO){
+    @PostMapping
+    public ResponseEntity<?> cadastra(@RequestBody @Validated EstoqueProdutoDTO estoqueProdutoDTO){
         try{
             return ResponseEntity.ok(this.estoqueProdutoService.cadastra(estoqueProdutoDTO));
         } catch (Exception e){
@@ -41,8 +42,8 @@ public class EstoqueProdutoController {
         }
     }
 
-    @PutMapping("/altera") @Transactional
-    public ResponseEntity<?> altera(@RequestBody EstoqueProduto estoqueProduto){
+    @PutMapping("/altera")
+    public ResponseEntity<?> altera(@RequestBody @Validated EstoqueProduto estoqueProduto){
         try {
             return ResponseEntity.ok(this.estoqueProdutoService.altera(estoqueProduto));
         } catch (Exception e){
@@ -50,7 +51,7 @@ public class EstoqueProdutoController {
         }
     }
 
-    @PutMapping("/desativa") @Transactional
+    @PutMapping("/desativa")
     public ResponseEntity<?> desativa(@RequestParam Long id){
         try {
             this.estoqueProdutoService.desativa(id);

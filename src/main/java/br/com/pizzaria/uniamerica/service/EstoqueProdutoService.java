@@ -35,7 +35,8 @@ public class EstoqueProdutoService {
 
     @Transactional
     public EstoqueProdutoDTO altera(EstoqueProduto estoqueProduto){
-        EstoqueProduto produtoAlterado = this.repository.getReferenceById(estoqueProduto.getId());
+        EstoqueProduto produtoAlterado = repository.findById(estoqueProduto.getId())
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
 
         produtoAlterado.setNome(estoqueProduto.getNome());
         produtoAlterado.setValor(estoqueProduto.getValor());
@@ -47,9 +48,9 @@ public class EstoqueProdutoService {
 
     @Transactional
     public void desativa(Long id){
-        Optional<EstoqueProduto> estoqueProduto = this.repository.findById(id);
-        estoqueProduto.orElseThrow(()-> new RuntimeException("ID informado não foi encontrado!"));
-        estoqueProduto.get().setAtivo(false);
+        EstoqueProduto estoqueProduto = this.repository.findById(id)
+                        .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        estoqueProduto.setAtivo(false);
     }
 
 }
