@@ -18,6 +18,11 @@ public class Pedido extends AbstractEntity{
 
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
+    private FormaDePagamento formaDePagamento;
+
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "pizza_id")
     private Pizza pizza;
