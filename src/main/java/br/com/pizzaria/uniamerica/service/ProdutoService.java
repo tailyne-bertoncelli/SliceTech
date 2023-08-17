@@ -7,6 +7,7 @@ import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
 import br.com.pizzaria.uniamerica.entities.Produto;
 import br.com.pizzaria.uniamerica.repository.EstoqueProdutoRepository;
 import br.com.pizzaria.uniamerica.repository.ProdutoRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -31,6 +32,7 @@ public class ProdutoService {
         return produtoList;
     }
 
+    @Transactional
     public ProdutoDetalhesDTO cadastra(ProdutoDTO produtoDTO){
         EstoqueProduto estoqueProduto = this.estoqueProdutoRepository.getReferenceById(produtoDTO.getEstoqueProduto_id());
         Produto produto = new Produto(estoqueProduto, produtoDTO.getQuantidade(), produtoDTO.getValorTotalProduto());
@@ -39,13 +41,19 @@ public class ProdutoService {
         return new ProdutoDetalhesDTO(estoqueProdutoDTO, produto.getQuantidade(), produto.getValorTotalProduto());
     }
 
+    @Transactional
     public ProdutoDetalhesDTO altera(Produto produto){
         Produto produtoAlterado = this.produtoRepository.getReferenceById(produto.getId());
+
+        produtoAlterado.setProduto(produto.getProduto());
+        produtoAlterado.setQuantidade(produto.getQuantidade());
+
         this.produtoRepository.save(produtoAlterado);
         EstoqueProdutoDTO estoqueProdutoDTO = new EstoqueProdutoDTO(produto.getProduto().getNome(), produto.getValorTotalProduto(), produto.getQuantidade());
         return new ProdutoDetalhesDTO(estoqueProdutoDTO, produto.getQuantidade(), produtoAlterado.getValorTotalProduto());
     }
 
+    @Transactional
     public void desativa(Long id){
         Produto produto = this.produtoRepository.getReferenceById(id);
         produto.setAtivo(false);
