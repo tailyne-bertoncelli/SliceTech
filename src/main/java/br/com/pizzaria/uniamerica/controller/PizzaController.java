@@ -6,6 +6,7 @@ import br.com.pizzaria.uniamerica.service.PizzaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -32,8 +33,8 @@ public class PizzaController {
         }
     }
 
-    @PostMapping @Transactional
-    public ResponseEntity<?> cadastra(@RequestBody PizzaDTO pizzaDTO){
+    @PostMapping
+    public ResponseEntity<?> cadastra(@RequestBody @Validated PizzaDTO pizzaDTO){
         try {
             return ResponseEntity.ok(this.pizzaService.cadastra(pizzaDTO));
         } catch (Exception e){
@@ -41,8 +42,8 @@ public class PizzaController {
         }
     }
 
-    @PutMapping("/altera") @Transactional
-    public ResponseEntity<?> altera(@RequestBody Pizza pizza){
+    @PutMapping("/altera")
+    public ResponseEntity<?> altera(@RequestBody @Validated Pizza pizza){
         try {
             return ResponseEntity.ok(this.pizzaService.altera(pizza));
         } catch (Exception e){
@@ -50,7 +51,7 @@ public class PizzaController {
         }
     }
 
-    @PutMapping("/desativa") @Transactional
+    @PutMapping("/desativa")
     public ResponseEntity<?> desativa(@RequestParam Long id){
         try {
             this.pizzaService.desativa(id);

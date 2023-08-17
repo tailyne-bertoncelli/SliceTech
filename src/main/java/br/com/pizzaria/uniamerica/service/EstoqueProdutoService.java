@@ -16,8 +16,8 @@ public class EstoqueProdutoService {
     private EstoqueProdutoRepository repository;
 
     public EstoqueProdutoDTO findById(Long id){
-        Optional<EstoqueProduto> estoqueProduto = repository.findById(id);
-        estoqueProduto.orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        EstoqueProduto estoqueProduto = repository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         return new EstoqueProdutoDTO(estoqueProduto);
     }
 
@@ -35,21 +35,22 @@ public class EstoqueProdutoService {
 
     @Transactional
     public EstoqueProdutoDTO altera(EstoqueProduto estoqueProduto){
-        EstoqueProduto produtoAlterado = this.repository.getReferenceById(estoqueProduto.getId());
+        EstoqueProduto produtoAlterado = repository.findById(estoqueProduto.getId())
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
 
         produtoAlterado.setNome(estoqueProduto.getNome());
-        produtoAlterado.setValor(estoqueProduto.getValor());
+        produtoAlterado.setValorUnidade(estoqueProduto.getValorUnidade());
         produtoAlterado.setEstoque(estoqueProduto.getEstoque());
 
         this.repository.save(produtoAlterado);
-        return new EstoqueProdutoDTO(produtoAlterado.getNome(),produtoAlterado.getValor(), produtoAlterado.getEstoque());
+        return new EstoqueProdutoDTO(produtoAlterado.getNome(),produtoAlterado.getValorUnidade(), produtoAlterado.getEstoque());
     }
 
     @Transactional
     public void desativa(Long id){
-        Optional<EstoqueProduto> estoqueProduto = this.repository.findById(id);
-        estoqueProduto.orElseThrow(()-> new RuntimeException("ID informado não foi encontrado!"));
-        estoqueProduto.get().setAtivo(false);
+        EstoqueProduto estoqueProduto = this.repository.findById(id)
+                        .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        estoqueProduto.setAtivo(false);
     }
 
 }

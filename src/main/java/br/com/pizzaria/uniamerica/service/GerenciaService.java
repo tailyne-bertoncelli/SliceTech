@@ -1,7 +1,6 @@
 package br.com.pizzaria.uniamerica.service;
 
 import br.com.pizzaria.uniamerica.entities.Pedido;
-import br.com.pizzaria.uniamerica.entities.Produto;
 import br.com.pizzaria.uniamerica.repository.GerenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

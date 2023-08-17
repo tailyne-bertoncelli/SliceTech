@@ -3,6 +3,7 @@ package br.com.pizzaria.uniamerica.service;
 import br.com.pizzaria.uniamerica.dto.pizzaDTOs.PizzaDTO;
 import br.com.pizzaria.uniamerica.entities.Pizza;
 import br.com.pizzaria.uniamerica.repository.PizzaRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -15,8 +16,8 @@ public class PizzaService {
     private PizzaRepository pizzaRepository;
 
     public PizzaDTO findById(Long id){
-        Optional<Pizza> pizza = this.pizzaRepository.findById(id);
-        pizza.orElseThrow(()-> new RuntimeException("ID informado não encontrado!"));
+        Pizza pizza = this.pizzaRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         PizzaDTO pizzaDTO = new PizzaDTO(pizza);
         return pizzaDTO;
     }
@@ -26,14 +27,17 @@ public class PizzaService {
         return pizzaList;
     }
 
+    @Transactional
     public PizzaDTO cadastra(PizzaDTO pizzaDTO){
         Pizza pizza = new Pizza(pizzaDTO);
         this.pizzaRepository.save(pizza);
         return pizzaDTO;
     }
 
+    @Transactional
     public PizzaDTO altera(Pizza pizza){
-        Pizza pizza1 = this.pizzaRepository.getReferenceById(pizza.getId());
+        Pizza pizza1 = this.pizzaRepository.findById(pizza.getId())
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
 
         pizza1.setSabor(pizza.getSabor());
         pizza1.setTamanhoPizza(pizza.getTamanhoPizza());
@@ -45,8 +49,10 @@ public class PizzaService {
         return pizzaDTO;
     }
 
+    @Transactional
     public void desativa(Long id){
-        Pizza pizza = this.pizzaRepository.getReferenceById(id);
+        Pizza pizza = this.pizzaRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         pizza.setAtivo(false);
         this.pizzaRepository.save(pizza);
     }
