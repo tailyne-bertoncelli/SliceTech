@@ -25,9 +25,9 @@ public interface GerenciaRepository extends JpaRepository<Gerecia, Long> {
     List<Pedido> totalPedidosRetira(@Param("data") LocalDate date);
 
     @Query("SELECT sum(pedido.valor) FROM Pedido pedido WHERE pedido.cadastro = :data")
-    Long valorTotalVendasCartao(@Param("data") LocalDate date);
+    double valorTotalVendasCartao(@Param("data") LocalDate date);
 
     @Query("SELECT sum(pedido.valor) FROM Pedido pedido WHERE pedido.cadastro = :data")
-    Long valorTotalVendasDinheiro(@Param("data") LocalDate date);
+    double valorTotalVendasDinheiro(@Param("data") LocalDate date);
 
 }

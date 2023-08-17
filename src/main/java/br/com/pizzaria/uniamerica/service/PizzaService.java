@@ -34,6 +34,12 @@ public class PizzaService {
 
     public PizzaDTO altera(Pizza pizza){
         Pizza pizza1 = this.pizzaRepository.getReferenceById(pizza.getId());
+
+        pizza1.setSabor(pizza.getSabor());
+        pizza1.setTamanhoPizza(pizza.getTamanhoPizza());
+        pizza1.setValor(pizza.getValor());
+        pizza1.setDescricao(pizza.getDescricao());
+
         this.pizzaRepository.save(pizza1);
         PizzaDTO pizzaDTO = new PizzaDTO(pizza1);
         return pizzaDTO;

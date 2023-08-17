@@ -2,10 +2,12 @@ package br.com.pizzaria.uniamerica.dto.enderecoDTOs;
 
 import br.com.pizzaria.uniamerica.entities.Endereco;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Optional;
 
+@NoArgsConstructor
 public class EnderecoDTO {
     @Getter @Setter
     private String logradouro;

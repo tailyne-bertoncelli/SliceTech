@@ -2,6 +2,7 @@ package br.com.pizzaria.uniamerica.service;
 
 import br.com.pizzaria.uniamerica.entities.Pedido;
 import br.com.pizzaria.uniamerica.entities.Produto;
+import br.com.pizzaria.uniamerica.repository.GerenciaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,35 +12,35 @@ import java.util.List;
 @Service
 public class GerenciaService {
     @Autowired
-    private GerenciaService gerenciaService;
+    private GerenciaRepository gerenciaRepository;
 
     public List<Pedido> pedidosDoDia(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaService.pedidosDoDia(date);
+        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidos(date);
         return pedidoList;
     }
 
     public List<Pedido> pedidosEncerrados(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaService.pedidosEncerrados(date);
+        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEncerrados(date);
         return pedidoList;
     }
 
     public List<Pedido> pedidosEntrega(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaService.pedidosEntrega(date);
+        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEntrega(date);
         return pedidoList;
     }
 
     public List<Pedido> pedidosRetira(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaService.pedidosRetira(date);
+        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosRetira(date);
         return pedidoList;
     }
 
-    public Long totalPedidosDinheiro(LocalDate date){
-        Long total = this.gerenciaService.totalPedidosDinheiro(date);
+    public double totalPedidosDinheiro(LocalDate date){
+        double total = this.gerenciaRepository.valorTotalVendasDinheiro(date);
         return total;
     }
 
-    public Long totalPedidosCartao(LocalDate date){
-        Long total = this.gerenciaService.totalPedidosCartao(date);
+    public double totalPedidosCartao(LocalDate date){
+        double total = this.gerenciaRepository.valorTotalVendasCartao(date);
         return total;
     }
 }
