@@ -4,7 +4,6 @@ import br.com.pizzaria.uniamerica.dto.estoqueProdutoDTOs.EstoqueProdutoDTO;
 import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
 import br.com.pizzaria.uniamerica.repository.EstoqueProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
