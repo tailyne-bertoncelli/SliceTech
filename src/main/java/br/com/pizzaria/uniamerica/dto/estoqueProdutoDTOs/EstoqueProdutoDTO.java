@@ -14,20 +14,20 @@ public class EstoqueProdutoDTO {
     private String nome;
     @Getter @Setter
     @DecimalMin(value = "0.01", message = "O valor não pode ser 0 ou null")
-    private double valor;
+    private double valorUnidade;
     @Getter @Setter
     @Min(value = 1, message = "O estoque não pode ser 0 ou null!")
     private int estoque;
 
     public EstoqueProdutoDTO(EstoqueProduto estoqueProduto) {
         this.nome = estoqueProduto.getNome();
-        this.valor = estoqueProduto.getValor();
+        this.valorUnidade = estoqueProduto.getValorUnidade();
         this.estoque = estoqueProduto.getEstoque();
     }
 
     public EstoqueProdutoDTO(String nome, double valor, int estoque) {
         this.nome = nome;
-        this.valor = valor;
+        this.valorUnidade = valor;
         this.estoque = estoque;
     }
 }

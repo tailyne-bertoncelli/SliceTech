@@ -39,11 +39,11 @@ public class EstoqueProdutoService {
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
 
         produtoAlterado.setNome(estoqueProduto.getNome());
-        produtoAlterado.setValor(estoqueProduto.getValor());
+        produtoAlterado.setValorUnidade(estoqueProduto.getValorUnidade());
         produtoAlterado.setEstoque(estoqueProduto.getEstoque());
 
         this.repository.save(produtoAlterado);
-        return new EstoqueProdutoDTO(produtoAlterado.getNome(),produtoAlterado.getValor(), produtoAlterado.getEstoque());
+        return new EstoqueProdutoDTO(produtoAlterado.getNome(),produtoAlterado.getValorUnidade(), produtoAlterado.getEstoque());
     }
 
     @Transactional

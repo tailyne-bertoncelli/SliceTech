@@ -20,14 +20,14 @@ public class EstoqueProduto extends AbstractEntity{
     private String nome;
     @Getter @Setter
     @Column(name = "valor")
-    private double valor;
+    private double valorUnidade;
     @Getter @Setter
     @Column(name = "estoque")
     private int estoque;
 
     public EstoqueProduto(EstoqueProdutoDTO estoqueProdutoDTO) {
         this.nome = estoqueProdutoDTO.getNome();
-        this.valor = estoqueProdutoDTO.getValor();
+        this.valorUnidade = estoqueProdutoDTO.getValorUnidade();
         this.estoque = estoqueProdutoDTO.getEstoque();
     }
 }

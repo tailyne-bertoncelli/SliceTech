@@ -8,6 +8,7 @@ import br.com.pizzaria.uniamerica.service.ProdutoService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -35,17 +36,16 @@ public class ProdutoController {
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastra(@RequestBody ProdutoDTO produtoDTO){
+    public ResponseEntity<?> cadastra(@RequestBody @Validated ProdutoDTO produtoDTO){
         try {
-            ProdutoDetalhesDTO produtoDetalhesDTO = this.produtoService.cadastra(produtoDTO);
-            return ResponseEntity.ok(produtoDetalhesDTO);
+            return ResponseEntity.ok(this.produtoService.cadastra(produtoDTO));
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
     @PutMapping("/altera")
-    public ResponseEntity<?> altera(@RequestBody Produto produto){
+    public ResponseEntity<?> altera(@RequestBody @Validated Produto produto){
         try {
             return ResponseEntity.ok(this.produtoService.altera(produto));
         } catch (Exception e){
