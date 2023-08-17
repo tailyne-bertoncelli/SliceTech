@@ -41,7 +41,7 @@ public class EstoqueProdutoController {
         }
     }
 
-    @PutMapping @Transactional
+    @PutMapping("/altera") @Transactional
     public ResponseEntity<?> altera(@RequestBody EstoqueProduto estoqueProduto){
         try {
             return ResponseEntity.ok(this.estoqueProdutoService.altera(estoqueProduto));
@@ -50,7 +50,7 @@ public class EstoqueProdutoController {
         }
     }
 
-    @PutMapping("/destiva") @Transactional
+    @PutMapping("/desativa") @Transactional
     public ResponseEntity<?> desativa(@RequestParam Long id){
         try {
             this.estoqueProdutoService.desativa(id);

@@ -26,8 +26,8 @@ public class EstoqueProduto extends AbstractEntity{
     private int estoque;
 
     public EstoqueProduto(EstoqueProdutoDTO estoqueProdutoDTO) {
-        this.nome = nome;
-        this.valor = valor;
-        this.estoque = estoque;
+        this.nome = estoqueProdutoDTO.getNome();
+        this.valor = estoqueProdutoDTO.getValor();
+        this.estoque = estoqueProdutoDTO.getEstoque();
     }
 }
