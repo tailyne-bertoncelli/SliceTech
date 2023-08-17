@@ -18,6 +18,11 @@ public class Pedido extends AbstractEntity{
 
     @Getter
     @Setter
+    @Enumerated(EnumType.STRING)
+    private FormaDePagamento formaDePagamento;
+
+    @Getter
+    @Setter
     @ManyToOne
     @JoinColumn(name = "pizza_id")
     private Pizza pizza;
@@ -39,7 +44,7 @@ public class Pedido extends AbstractEntity{
     private boolean entrega;
     @Getter
     @Setter
-    @Column(name = "sitaucao")
+    @Column(name = "situacao")
     private boolean situacao; //Possivel alteracao de nome por nao esclarecimento de nome de varaivel
     @Getter
     @Setter

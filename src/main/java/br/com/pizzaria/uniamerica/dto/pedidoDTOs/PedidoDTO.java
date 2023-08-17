@@ -4,10 +4,7 @@ package br.com.pizzaria.uniamerica.dto.pedidoDTOs;
 import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
 import br.com.pizzaria.uniamerica.dto.pizzaDTOs.PizzaDTO;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDTO;
-import br.com.pizzaria.uniamerica.entities.Cliente;
-import br.com.pizzaria.uniamerica.entities.Pizza;
-import br.com.pizzaria.uniamerica.entities.Produto;
-import br.com.pizzaria.uniamerica.entities.TamanhoPizza;
+import br.com.pizzaria.uniamerica.entities.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -45,4 +42,23 @@ public class PedidoDTO {
     @Getter
     @Setter
     private List<ProdutoDTO> produtosList = new ArrayList<>();
+
+
+    public PedidoDTO(PizzaDTO pizza, String sabor, String descricao, double valor, boolean entrega, boolean situacao, ClienteDTO cliente) {
+        this.pizza = pizza;
+        this.sabor = sabor;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.entrega = entrega;
+        this.situacao = situacao;
+        this.cliente = cliente;
+    }
+
+    public PedidoDTO(Pedido entity) {
+        sabor = entity.getSabor();
+        valor = entity.getValor();
+        descricao = entity.getDescricao();
+        situacao = entity.isSituacao();
+        entrega = entity.isEntrega();
+    }
 }
