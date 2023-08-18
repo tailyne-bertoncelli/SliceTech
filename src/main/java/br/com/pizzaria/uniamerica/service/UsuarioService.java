@@ -1,16 +1,15 @@
 package br.com.pizzaria.uniamerica.service;
 
 import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
-import br.com.pizzaria.uniamerica.entities.Produto;
 import br.com.pizzaria.uniamerica.entities.Usuario;
 import br.com.pizzaria.uniamerica.repository.UsuarioRepository;
 import br.com.pizzaria.uniamerica.service.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 
 /**
@@ -28,9 +27,8 @@ public class UsuarioService {
         return new UsuarioDTO(usuario);
     }
 
-    public Page<UsuarioDTO> findAll(Pageable pageable){
-        Page<Usuario> result = usuarioRepository.findAll(pageable);
-        return result.map(x -> new UsuarioDTO(x));
+    public List<Usuario> findAll(){
+        return usuarioRepository.findAll();
     }
 
     @Transactional
@@ -57,5 +55,6 @@ public class UsuarioService {
        usuario.setLogin(usuarioDTO.getLogin());
        usuario.setEmail(usuarioDTO.getEmail());
        usuario.setSenha(usuarioDTO.getSenha());
+       usuario.setCargo(usuarioDTO.getCargo());
     }
 }
