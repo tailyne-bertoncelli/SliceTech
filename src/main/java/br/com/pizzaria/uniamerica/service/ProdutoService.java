@@ -37,15 +37,15 @@ public class ProdutoService {
                 .orElseThrow(()-> new RuntimeException("O produto informado não foi encontrado!"));
 
         verificaEstoque(estoqueProduto, produtoDTO);
+        Produto produto = new Produto(estoqueProduto, produtoDTO.getQuantidade());
 
-        Produto produto = new Produto(estoqueProduto, produtoDTO.getQuantidade(), produtoDTO.getValorTotalProduto());
+        double valorTotal = calculaTotalProduto(estoqueProduto, produtoDTO);
+        produto.setValorTotalProduto(valorTotal);
+
         this.produtoRepository.save(produto);
-
         baixaEstoque(estoqueProduto, produto);
-
         return produto;
     }
-
 
     @Transactional
     public ProdutoDetalhesDTO altera(Produto produto){
@@ -81,5 +81,12 @@ public class ProdutoService {
         int estoque = estoqueProduto.getEstoque();
         int estoqueAtualizado = estoque - produto.getQuantidade();
         estoqueProduto.setEstoque(estoqueAtualizado);
+    }
+
+    private double calculaTotalProduto(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
+        double valorUn = estoqueProduto.getValorUnidade();
+        int qntComprada = produtoDTO.getQuantidade();
+        double total = valorUn * qntComprada;
+        return total;
     }
 }
