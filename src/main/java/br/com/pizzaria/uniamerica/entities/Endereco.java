@@ -12,7 +12,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "tb_endereco", schema = "public")
 @NoArgsConstructor
-@AllArgsConstructor
 public class Endereco extends AbstractEntity{
     @Getter @Setter
     @Column(name = "logradouro")

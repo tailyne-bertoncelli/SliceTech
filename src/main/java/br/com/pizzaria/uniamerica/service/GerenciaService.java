@@ -19,32 +19,37 @@ public class GerenciaService {
 
     public List<Pedido> pedidosDoDia(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidos(date);
-        escreveTxt("relatorio-dia.txt", pedidoList.toString());
+        deixaListaBonitinha(pedidoList);
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-dia-"+ date +".txt", pedidoList.toString());
         return pedidoList;
     }
-
     public List<Pedido> pedidosEncerrados(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEncerrados(date);
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-encerrados-"+ date +".txt", pedidoList.toString());
         return pedidoList;
     }
 
     public List<Pedido> pedidosEntrega(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEntrega(date);
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-entrega-"+ date +".txt", pedidoList.toString());
         return pedidoList;
     }
 
     public List<Pedido> pedidosRetira(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosRetira(date);
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-retira-"+ date +".txt", pedidoList.toString());
         return pedidoList;
     }
 
     public double totalPedidosDinheiro(LocalDate date){
         double total = this.gerenciaRepository.valorTotalVendasDinheiro(date);
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-dinheiro-"+ date +".txt", String.valueOf(total));
         return total;
     }
 
     public double totalPedidosCartao(LocalDate date){
         double total = this.gerenciaRepository.valorTotalVendasCartao(date);
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-cartao-"+ date +".txt", String.valueOf(total));
         return total;
     }
 
@@ -57,6 +62,20 @@ public class GerenciaService {
             escreveNoArquivo.append(conteudo);
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void deixaListaBonitinha(List<Pedido> pedidoList) {
+        for (int i = 0; i < pedidoList.size(); i++) {
+            System.out.println("----- PEDIDO "+ i + "-----");
+            System.out.println("Pizza - "+ pedidoList.get(i).getPizza());
+            System.out.println("Sabor - "+ pedidoList.get(i).getSabor());
+            System.out.println("Descricao - "+ pedidoList.get(i).getDescricao());
+            System.out.println("Valor - " + pedidoList.get(i).getValor());
+            System.out.println("Entrega - "+ pedidoList.get(i).isEntrega());
+            System.out.println("Situação - "+ pedidoList.get(i).isSituacao());
+            System.out.println("Cliente - " + pedidoList.get(i).getCliente());
+            System.out.println("Produtos adicionais - "+ pedidoList.get(i).getProdutosList());
         }
     }
 }
