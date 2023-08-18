@@ -36,12 +36,16 @@ public class ProdutoService {
         EstoqueProduto estoqueProduto = this.estoqueProdutoRepository.findById(produtoDTO.getEstoqueProduto_id())
                 .orElseThrow(()-> new RuntimeException("O produto informado não foi encontrado!"));
 
+        verificaEstoque(estoqueProduto, produtoDTO);
+
         Produto produto = new Produto(estoqueProduto, produtoDTO.getQuantidade(), produtoDTO.getValorTotalProduto());
         this.produtoRepository.save(produto);
+
+        baixaEstoque(estoqueProduto, produto);
+
         return produto;
-//        EstoqueProdutoDTO estoqueProdutoDTO = new EstoqueProdutoDTO(estoqueProduto.getNome(), estoqueProduto.getValor(), estoqueProduto.getEstoque());
-//        return new ProdutoDetalhesDTO(estoqueProdutoDTO, produto.getQuantidade(), produto.getValorTotalProduto());
     }
+
 
     @Transactional
     public ProdutoDetalhesDTO altera(Produto produto){
@@ -62,5 +66,20 @@ public class ProdutoService {
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         produto.setAtivo(false);
         this.produtoRepository.save(produto);
+    }
+
+    private void verificaEstoque(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
+        if (estoqueProduto.getEstoque() == 0){
+            throw new RuntimeException("Produto esgotado!");
+        }
+        if (produtoDTO.getQuantidade() > estoqueProduto.getEstoque()){
+            throw new RuntimeException("Somente "+ estoqueProduto.getEstoque() + " " + estoqueProduto.getNome() +" em estoque!");
+        }
+    }
+
+    private void baixaEstoque(EstoqueProduto estoqueProduto, Produto produto) {
+        int estoque = estoqueProduto.getEstoque();
+        int estoqueAtualizado = estoque - produto.getQuantidade();
+        estoqueProduto.setEstoque(estoqueAtualizado);
     }
 }
