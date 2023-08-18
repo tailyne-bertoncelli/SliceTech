@@ -2,12 +2,12 @@ package br.com.pizzaria.uniamerica.dto.pedidoDTOs;
 
 
 import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
+import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
 import br.com.pizzaria.uniamerica.dto.pizzaDTOs.PizzaDTO;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDTO;
+import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 import br.com.pizzaria.uniamerica.entities.*;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,8 +20,11 @@ import java.util.List;
 public class PedidoDTO {
     @Getter
     @Setter
-    @NotNull
-    private PizzaDTO pizza;
+    @Enumerated(EnumType.STRING)
+    private String formaPagamentoId;
+    @Getter
+    @Setter
+    private Long pizzaId;
     @Getter
     @Setter
     @NotNull
@@ -44,27 +47,27 @@ public class PedidoDTO {
     @Getter
     @Setter
     @NotNull
-    private ClienteDTO cliente;
-    @Getter
-    @Setter
-    private List<ProdutoDTO> produtosList = new ArrayList<>();
+    private Long clientId;
 
 
-    public PedidoDTO(PizzaDTO pizza, String sabor, String descricao, double valor, boolean entrega, boolean situacao, ClienteDTO cliente) {
-        this.pizza = pizza;
+    public PedidoDTO(String formaPagamentoId, Long pizzaId, String sabor, String descricao, double valor, boolean entrega, boolean situacao, Long clientId) {
+        this.formaPagamentoId = formaPagamentoId;
+        this.pizzaId = pizzaId;
         this.sabor = sabor;
         this.descricao = descricao;
         this.valor = valor;
         this.entrega = entrega;
         this.situacao = situacao;
-        this.cliente = cliente;
+        this.clientId = clientId;
     }
 
     public PedidoDTO(Pedido entity) {
-        sabor = entity.getSabor();
-        valor = entity.getValor();
-        descricao = entity.getDescricao();
-        situacao = entity.isSituacao();
-        entrega = entity.isEntrega();
+       pizzaId = entity.getPizza().getId();
+       clientId = entity.getCliente().getId();
+       sabor = entity.getSabor();
+       descricao = entity.getDescricao();
+       valor = entity.getValor();
+       entrega = entity.isEntrega();
+       situacao = entity.isSituacao();
     }
 }

@@ -1,5 +1,8 @@
 package br.com.pizzaria.uniamerica.entities;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -22,6 +25,7 @@ public class Pedido extends AbstractEntity{
     @Getter
     @Setter
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "pizza_id")
     private Pizza pizza;
     @Getter
@@ -47,10 +51,26 @@ public class Pedido extends AbstractEntity{
     @Getter
     @Setter
     @ManyToOne
+    @JsonBackReference
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-    @Getter
-    @Setter
-    @OneToMany
-    private List<Produto> produtosList = new ArrayList<>();
+//    @Getter
+//    @Setter
+//    @OneToMany
+//    @JsonManagedReference
+//    @JsonIgnore
+//    private List<Produto> produtosList = new ArrayList<>();
+
+    public Pedido(Cliente cliente, Pizza pizza, String formaPagamentoId, String sabor, String descricao, double valor, boolean entrega, boolean situacao) {
+        this.cliente = cliente;
+        this.pizza = pizza;
+        this.formaDePagamento = FormaDePagamento.valueOf(formaPagamentoId);
+        this.sabor = sabor;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.entrega = entrega;
+        this.situacao = situacao;
+    }
+
+
 }

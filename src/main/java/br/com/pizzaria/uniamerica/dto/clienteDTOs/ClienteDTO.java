@@ -19,35 +19,29 @@ public class ClienteDTO {
 
     @Getter
     @Setter
-    private Long id;
-    @Getter
-    @Setter
     @NotNull
-    @Column(name = "nome")
     private String nome;
     @Getter
     @Setter
-    private UsuarioDTO usuarioDTO;
+    private Long usuarioId;
     @Getter
     @Setter
-    private EnderecoDTO enderecoDTO;
+    private Long enderecoId;
     @Getter
     @Setter
     private List<PedidoDTO> pedidoList = new ArrayList<>();
 
-    public ClienteDTO(Long id, String nome, UsuarioDTO usuarioDTO, EnderecoDTO enderecoDTO, List<PedidoDTO> pedidoList) {
-        this.id = id;
+    public ClienteDTO( String nome, Long usuarioId, Long enderecoId, List<PedidoDTO> pedidoList) {
         this.nome = nome;
-        this.usuarioDTO = usuarioDTO;
-        this.enderecoDTO = enderecoDTO;
+        this.usuarioId = usuarioId;
+        this.enderecoId = enderecoId;
         this.pedidoList = pedidoList;
     }
 
     public ClienteDTO(Cliente entity) {
-        id = entity.getId();
         nome = entity.getNome();
-        enderecoDTO = new EnderecoDTO(entity.getEndereco());
-        usuarioDTO = new UsuarioDTO(entity.getUsuario());
+        usuarioId = entity.getUsuario().getId();
+        enderecoId = entity.getEndereco().getId();
     }
 
 }

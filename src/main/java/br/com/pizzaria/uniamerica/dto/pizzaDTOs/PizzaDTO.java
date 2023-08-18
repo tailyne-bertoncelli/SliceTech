@@ -29,7 +29,6 @@ public class PizzaDTO {
     private TamanhoPizza tamanhoPizza;
 
     public PizzaDTO(Pizza pizza1) {
-        this.sabor = pizza1.getSabor();
         this.descricao = pizza1.getDescricao();
         this.valor = pizza1.getValor();
         this.tamanhoPizza = pizza1.getTamanhoPizza();

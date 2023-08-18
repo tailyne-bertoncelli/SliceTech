@@ -3,6 +3,8 @@ package br.com.pizzaria.uniamerica.controller;
 
 import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
 import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
+import br.com.pizzaria.uniamerica.entities.Cliente;
+import br.com.pizzaria.uniamerica.entities.Pedido;
 import br.com.pizzaria.uniamerica.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,9 +22,9 @@ public class ClienteController {
     private ClienteService clienteService;
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<ClienteDTO> findById(@PathVariable Long id){
-        ClienteDTO clienteDTO = clienteService.findById(id);
-        return  ResponseEntity.ok(clienteDTO);
+    public ResponseEntity<?> findById(@PathVariable Long id){
+        Cliente cliente = clienteService.findById(id);
+        return  ResponseEntity.ok(cliente);
     }
 
     @GetMapping(value = "/lista")
@@ -31,15 +33,17 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<ClienteDTO> insert(@Valid @RequestBody ClienteDTO clienteDTO){
-        clienteDTO = clienteService.insert(clienteDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(clienteDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(clienteDTO);
+    public ResponseEntity<?> insert(@Valid @RequestBody ClienteDTO clienteDTO){
+        try {
+            return ResponseEntity.ok(this.clienteService.insert(clienteDTO));
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 
     @PutMapping(value =  "/{id}")
     public ResponseEntity<ClienteDTO> update(@Valid @PathVariable Long id,@RequestBody ClienteDTO clienteDTO){
-        clienteDTO = clienteService.update(id,clienteDTO);
+//        clienteDTO = clienteService.update(id,clienteDTO);
         return ResponseEntity.ok(clienteDTO);
     }
 }

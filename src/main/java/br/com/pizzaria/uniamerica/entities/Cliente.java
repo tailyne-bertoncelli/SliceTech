@@ -1,5 +1,8 @@
 package br.com.pizzaria.uniamerica.entities;
 
+import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
@@ -26,7 +29,7 @@ public class Cliente extends AbstractEntity{
     @Getter
     @Setter
     @ManyToOne
-
+    @JsonBackReference
     @JoinColumn(name = "endereco_id",nullable = false)
     private Endereco endereco;
     @Getter
@@ -36,6 +39,13 @@ public class Cliente extends AbstractEntity{
     @OneToMany(mappedBy = "cliente")
     @Getter
     @Setter
+    @JsonManagedReference
     private List<Pedido> pedidoList = new ArrayList<>();
+
+    public Cliente(Usuario usuario, Endereco endereco, String nome) {
+        this.usuario = usuario;
+        this.endereco = endereco;
+        this.nome = nome;
+    }
 
 }

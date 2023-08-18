@@ -55,7 +55,7 @@ public class UsuarioService {
        usuario.setLogin(usuarioDTO.getLogin());
        usuario.setEmail(usuarioDTO.getEmail());
        usuario.setSenha(usuarioDTO.getSenha());
-       usuario.setCargo(usuarioDTO.getCargo());
+//       usuario.setCargo(usuarioDTO.getCargo());
 
     }
 }

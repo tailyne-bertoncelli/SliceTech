@@ -39,7 +39,7 @@ public class PizzaService {
         Pizza pizza1 = this.pizzaRepository.findById(pizza.getId())
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
 
-        pizza1.setSabor(pizza.getSabor());
+
         pizza1.setTamanhoPizza(pizza.getTamanhoPizza());
         pizza1.setValor(pizza.getValor());
         pizza1.setDescricao(pizza.getDescricao());
