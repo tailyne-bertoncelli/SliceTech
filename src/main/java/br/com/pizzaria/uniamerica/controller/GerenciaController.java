@@ -23,7 +23,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/pedidos-encerrados")
-    public ResponseEntity<?> pedidosEncerrados(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosEncerrados(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.pedidosEncerrados(date));
         } catch (Exception e){
@@ -32,7 +32,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/pedidos-entrega")
-    public ResponseEntity<?> pedidosEntrega(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosEntrega(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.pedidosEntrega(date));
         } catch (Exception e){
@@ -41,7 +41,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/pedidos-retira")
-    public ResponseEntity<?> pedidosRetira(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosRetira(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.pedidosRetira(date));
         }catch (Exception e){
@@ -50,7 +50,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/vendas-cartao")
-    public ResponseEntity<?> pedidosCartao(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosCartao(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.totalPedidosCartao(date));
         } catch (Exception e){
@@ -59,7 +59,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/vendas-dinheiro")
-    public ResponseEntity<?> pedidosDinheiro(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosDinheiro(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.totalPedidosDinheiro(date));
         } catch (Exception e){

@@ -13,7 +13,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "tb_endereco", schema = "public")
-@Builder
+//@Builder
 @NoArgsConstructor
 public class Endereco extends AbstractEntity{
     @Getter @Setter

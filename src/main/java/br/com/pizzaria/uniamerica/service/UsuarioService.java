@@ -32,13 +32,12 @@ public class UsuarioService {
     }
 
     @Transactional
-    public UsuarioDTO insert(UsuarioDTO usuarioDTO){
-        Usuario usuario = new Usuario();
-        copyDtoToEntity(usuarioDTO,usuario);
-        usuario = usuarioRepository.save(usuario);
-        return new UsuarioDTO(usuario);
-    }
+    public Usuario insert(UsuarioDTO usuarioDTO){
+        Usuario usuario = new Usuario(usuarioDTO.getLogin(),usuarioDTO.getEmail(),usuarioDTO.getSenha(),usuarioDTO.getCargo());
+        this.usuarioRepository.save(usuario);
+        return usuario;
 
+    }
     @Transactional
     public UsuarioDTO update(Long id,UsuarioDTO usuarioDTO){
         try{

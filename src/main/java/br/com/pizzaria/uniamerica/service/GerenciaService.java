@@ -19,7 +19,6 @@ public class GerenciaService {
 
     public List<Pedido> pedidosDoDia(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidos(date);
-        deixaListaBonitinha(pedidoList);
         escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-dia-"+ date +".txt", pedidoList.toString());
         return pedidoList;
     }
@@ -65,17 +64,17 @@ public class GerenciaService {
         }
     }
 
-    private void deixaListaBonitinha(List<Pedido> pedidoList) {
-        for (int i = 0; i < pedidoList.size(); i++) {
-            System.out.println("----- PEDIDO "+ i + "-----");
-            System.out.println("Pizza - "+ pedidoList.get(i).getPizza());
-            System.out.println("Sabor - "+ pedidoList.get(i).getSabor());
-            System.out.println("Descricao - "+ pedidoList.get(i).getDescricao());
-            System.out.println("Valor - " + pedidoList.get(i).getValor());
-            System.out.println("Entrega - "+ pedidoList.get(i).isEntrega());
-            System.out.println("Situação - "+ pedidoList.get(i).isSituacao());
-            System.out.println("Cliente - " + pedidoList.get(i).getCliente());
-            System.out.println("Produtos adicionais - "+ pedidoList.get(i).getProdutosList());
-        }
-    }
+//    private void deixaListaBonitinha(List<Pedido> pedidoList) {
+//        for (int i = 0; i < pedidoList.size(); i++) {
+//            System.out.println("----- PEDIDO "+ i + "-----");
+//            System.out.println("Pizza - "+ pedidoList.get(i).getPizza());
+//            System.out.println("Sabor - "+ pedidoList.get(i).getSabor());
+//            System.out.println("Descricao - "+ pedidoList.get(i).getDescricao());
+//            System.out.println("Valor - " + pedidoList.get(i).getValor());
+//            System.out.println("Entrega - "+ pedidoList.get(i).isEntrega());
+//            System.out.println("Situação - "+ pedidoList.get(i).isSituacao());
+//            System.out.println("Cliente - " + pedidoList.get(i).getCliente());
+//            System.out.println("Produtos adicionais - "+ pedidoList.get(i).getProdutosList());
+//        }
+//    }
 }
