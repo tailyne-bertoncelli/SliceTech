@@ -13,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 public class ClienteService {
     @Autowired
@@ -24,10 +26,8 @@ public class ClienteService {
         return new ClienteDTO(cliente);
     }
 
-    @Transactional(readOnly = true)
-    public Page<ClienteDTO> findAll(Pageable pageable){
-        Page<Cliente> result = clienteRepository.findAll(pageable);
-        return result.map(x -> new ClienteDTO(x));
+    public List<Cliente> findAll(){
+        return clienteRepository.findAll();
     }
 
     @Transactional
@@ -53,6 +53,7 @@ public class ClienteService {
 
     private void copyDtoToEntity(ClienteDTO clienteDTO, Cliente cliente) {
         cliente.setNome(clienteDTO.getNome());
-
+        cliente.setId(clienteDTO.getId());
+//        cliente.setUsuario(clienteDTO.getUsuarioDTO());
     }
 }

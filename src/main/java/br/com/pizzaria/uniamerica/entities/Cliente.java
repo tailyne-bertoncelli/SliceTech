@@ -1,6 +1,7 @@
 package br.com.pizzaria.uniamerica.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,20 +20,22 @@ public class Cliente extends AbstractEntity{
     @Getter
     @Setter
     @OneToOne
+    @NotNull
     @PrimaryKeyJoinColumn(name = "usuario_id")
     private Usuario usuario;
     @Getter
     @Setter
     @ManyToOne
-    @JoinColumn(name = "endereco_id")
+    @NotNull
+    @JoinColumn(name = "endereco_id",nullable = false)
     private Endereco endereco;
     @Getter
     @Setter
     @Column(name = "nome")
     private String nome;
-
     @OneToMany(mappedBy = "cliente")
     @Getter
     @Setter
     private List<Pedido> pedidoList = new ArrayList<>();
+
 }

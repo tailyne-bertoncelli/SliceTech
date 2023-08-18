@@ -25,17 +25,17 @@ public class EnderecoDTO {
     @Getter @Setter
     private String complemento;
 
-    public EnderecoDTO(Optional<Endereco> enderecoDTO) {
-        this.logradouro = enderecoDTO.get().getLogradouro();
-        this.numero = enderecoDTO.get().getNumero();
-        this.cep = enderecoDTO.get().getCep();
-        this.complemento = enderecoDTO.get().getComplemento();
+    public EnderecoDTO(String logradouro, Long numero, String cep, String complemento) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cep = cep;
+        this.complemento = complemento;
     }
 
     public EnderecoDTO(Endereco endereco1) {
-        this.logradouro = endereco1.getLogradouro();
-        this.numero = endereco1.getNumero();
-        this.cep = endereco1.getCep();
-        this.complemento = endereco1.getComplemento();
+        logradouro = endereco1.getLogradouro();
+        numero = endereco1.getNumero();
+        cep = endereco1.getCep();
+        complemento = endereco1.getComplemento();
     }
 }
