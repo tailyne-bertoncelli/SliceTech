@@ -12,7 +12,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/produto")
+@RequestMapping("api/produto")
 public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;

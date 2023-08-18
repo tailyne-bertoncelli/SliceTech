@@ -3,21 +3,18 @@ package br.com.pizzaria.uniamerica.controller;
 import br.com.pizzaria.uniamerica.service.GerenciaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/relatorio")
+@RequestMapping("api/relatorio")
 public class GerenciaController {
     @Autowired
     private GerenciaService gerenciaService;
 
     @GetMapping("/pedidos-dia")
-    public ResponseEntity<?> pedidosDoDia(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosDoDia(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.pedidosDoDia(date));
         } catch (Exception e){

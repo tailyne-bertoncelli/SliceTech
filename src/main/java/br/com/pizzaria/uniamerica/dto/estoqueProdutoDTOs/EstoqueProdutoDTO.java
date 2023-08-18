@@ -16,7 +16,6 @@ public class EstoqueProdutoDTO {
     @DecimalMin(value = "0.01", message = "O valor não pode ser 0 ou null")
     private double valorUnidade;
     @Getter @Setter
-    @Min(value = 1, message = "O estoque não pode ser 0 ou null!")
     private int estoque;
 
     public EstoqueProdutoDTO(EstoqueProduto estoqueProduto) {

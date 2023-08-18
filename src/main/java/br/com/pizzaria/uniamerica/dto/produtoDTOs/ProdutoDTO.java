@@ -17,13 +17,10 @@ public class ProdutoDTO {
     @Getter @Setter
     @Min(value = 1, message = "Informe a quantidade do produto!")
     private int quantidade;
-    @Getter @Setter
-    private double valorTotalProduto;
 
     public ProdutoDTO(Produto produto) {
         this.estoqueProduto_id = produto.getProduto().getId();
         this.quantidade = produto.getQuantidade();
-        this.valorTotalProduto = produto.getValorTotalProduto();
     }
 
 }

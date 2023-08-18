@@ -22,9 +22,8 @@ public class Produto extends AbstractEntity {
     @Column(name = "valor_total")
     private double valorTotalProduto;
 
-    public Produto(EstoqueProduto produto, int quantidade, double valorTotalProduto) {
+    public Produto(EstoqueProduto produto, int quantidade) {
         this.produto = produto;
         this.quantidade = quantidade;
-        this.valorTotalProduto = valorTotalProduto;
     }
 }

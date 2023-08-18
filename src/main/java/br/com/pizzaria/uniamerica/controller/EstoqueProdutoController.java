@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/estoque-produto")
+@RequestMapping("api/estoque-produto")
 public class EstoqueProdutoController {
     @Autowired
     private EstoqueProdutoService estoqueProdutoService;

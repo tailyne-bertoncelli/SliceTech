@@ -8,6 +8,7 @@ import br.com.pizzaria.uniamerica.entities.*;
 import jakarta.persistence.Column;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -19,25 +20,30 @@ import java.util.List;
 public class PedidoDTO {
     @Getter
     @Setter
+    @NotNull
     private PizzaDTO pizza;
     @Getter
     @Setter
+    @NotNull
     private String sabor;
     @Getter
     @Setter
     private String descricao;
     @Getter
     @Setter
+    @NotNull
     private double valor;
     @Getter
     @Setter
+    @NotNull
     private boolean entrega;
     @Getter
     @Setter
-
+    @NotNull
     private boolean situacao; //Possivel alteracao de nome por nao esclarecimento de nome de varaivel
     @Getter
     @Setter
+    @NotNull
     private ClienteDTO cliente;
     @Getter
     @Setter

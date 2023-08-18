@@ -53,5 +53,6 @@ public class ClienteService {
 
     private void copyDtoToEntity(ClienteDTO clienteDTO, Cliente cliente) {
         cliente.setNome(clienteDTO.getNome());
+
     }
 }
