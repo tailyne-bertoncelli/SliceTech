@@ -30,18 +30,11 @@ public class UsuarioDTO {
     @Email
     private String email;
 
-    @NotNull
-    @Enumerated(EnumType.STRING)
-    @Getter
-    @Setter
-    private Cargo cargo;
-
-    public UsuarioDTO(Long id, String login, String senha, String email, Cargo cargo) {
+    public UsuarioDTO(Long id, String login, String senha, String email) {
         this.id = id;
         this.login = login;
         this.senha = senha;
         this.email = email;
-        this.cargo = cargo;
     }
 
     public UsuarioDTO(Usuario entity) {
@@ -49,7 +42,7 @@ public class UsuarioDTO {
         login = entity.getLogin();
         senha = entity.getSenha();
         email = entity.getEmail();
-        cargo = entity.getCargo();
+
     }
 
 

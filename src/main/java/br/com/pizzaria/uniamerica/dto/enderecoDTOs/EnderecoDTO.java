@@ -13,6 +13,9 @@ import java.util.Optional;
 
 @NoArgsConstructor
 public class EnderecoDTO {
+    @Getter
+    @Setter
+    private Long id;
     @Getter @Setter
     @NotBlank(message = "O logradouro não pode ser vazio ou em branco!")
     private String logradouro;
@@ -25,17 +28,19 @@ public class EnderecoDTO {
     @Getter @Setter
     private String complemento;
 
-    public EnderecoDTO(Optional<Endereco> enderecoDTO) {
-        this.logradouro = enderecoDTO.get().getLogradouro();
-        this.numero = enderecoDTO.get().getNumero();
-        this.cep = enderecoDTO.get().getCep();
-        this.complemento = enderecoDTO.get().getComplemento();
+    public EnderecoDTO(Long id, String logradouro, Long numero, String cep, String complemento) {
+        this.id = id;
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cep = cep;
+        this.complemento = complemento;
     }
 
-    public EnderecoDTO(Endereco endereco1) {
-        this.logradouro = endereco1.getLogradouro();
-        this.numero = endereco1.getNumero();
-        this.cep = endereco1.getCep();
-        this.complemento = endereco1.getComplemento();
+    public EnderecoDTO(Endereco entity) {
+        id = entity.getId();
+        logradouro = entity.getLogradouro();
+        numero = entity.getNumero();
+        cep = entity.getCep();
+        complemento = entity.getComplemento();
     }
 }
