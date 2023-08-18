@@ -19,46 +19,65 @@ public class GerenciaService {
 
     public List<Pedido> pedidosDoDia(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidos(date);
-        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-dia-"+ date +".txt", pedidoList.toString());
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-dia-"+ date +".txt", pedidoList);
         return pedidoList;
     }
     public List<Pedido> pedidosEncerrados(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEncerrados(date);
-        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-encerrados-"+ date +".txt", pedidoList.toString());
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-encerrados-"+ date +".txt", pedidoList);
         return pedidoList;
     }
 
     public List<Pedido> pedidosEntrega(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEntrega(date);
-        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-entrega-"+ date +".txt", pedidoList.toString());
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-entrega-"+ date +".txt",pedidoList);
         return pedidoList;
     }
 
     public List<Pedido> pedidosRetira(LocalDate date){
         List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosRetira(date);
-        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-retira-"+ date +".txt", pedidoList.toString());
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-retira-"+ date +".txt", pedidoList);
         return pedidoList;
     }
 
     public double totalPedidosDinheiro(LocalDate date){
         double total = this.gerenciaRepository.valorTotalVendasDinheiro(date);
-        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-dinheiro-"+ date +".txt", String.valueOf(total));
+        //escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-dinheiro-"+ date +".txt", String.valueOf(total));
         return total;
     }
 
     public double totalPedidosCartao(LocalDate date){
         double total = this.gerenciaRepository.valorTotalVendasCartao(date);
-        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-cartao-"+ date +".txt", String.valueOf(total));
+        //escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-cartao-"+ date +".txt", String.valueOf(total));
         return total;
     }
 
-    private void escreveTxt(String caminho, String conteudo) {
+    private void escreveTxt(String caminho, List<Pedido> list) {
+
+        
         try (
                 FileWriter criaArquivo = new FileWriter(caminho, false); //false para apagar o conteúdo anterior e escrever de novo
                 BufferedWriter buffer = new BufferedWriter(criaArquivo);
                 PrintWriter escreveNoArquivo = new PrintWriter(buffer);
         ){
-            escreveNoArquivo.append(conteudo);
+
+            for (int i = 0; i < list.size(); i++) {
+                String comprovante = "---------- PEDIDO "+ i + " ----------" + "\n" +
+                                "Status: " + list.get(i).isSituacao() + "\n" +
+                                "Data: " + list.get(i).getCadastro().toString() + "\n" +
+                                "Pizza: " + list.get(i).getPizza().getDescricao().toString() + "\n" +
+                                "Tamanho: "+ list.get(i).getPizza().getTamanhoPizza().toString() + "\n" +
+                                "Observação: "+ list.get(i).getDescricao().toString() + "\n" +
+                                "\n" +
+                                "Pedido para entrega? " + list.get(i).isEntrega() + "\n" +
+                                "Cliente: "+ list.get(i).getCliente().getNome().toString()+ "\n" +
+                                "Endereço: " + list.get(i).getCliente().getEndereco().getLogradouro().toString() + ", " + list.get(i).getCliente().getEndereco().getNumero().toString() + "\n" +
+                                "\n" +
+                                "Forma de pagamento: " + list.get(i).getFormaDePagamento().toString() + "\n" +
+                                "Valor total: R$ " + list.get(i).getValor();
+
+                escreveNoArquivo.append(comprovante);
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
