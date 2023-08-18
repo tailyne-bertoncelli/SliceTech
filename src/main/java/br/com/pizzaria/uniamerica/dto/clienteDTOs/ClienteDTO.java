@@ -35,7 +35,6 @@ public class ClienteDTO {
     @Setter
     private List<PedidoDTO> pedidoList = new ArrayList<>();
 
-
     public ClienteDTO(Long id, String nome, UsuarioDTO usuarioDTO, EnderecoDTO enderecoDTO, List<PedidoDTO> pedidoList) {
         this.id = id;
         this.nome = nome;
@@ -49,7 +48,6 @@ public class ClienteDTO {
         nome = entity.getNome();
         enderecoDTO = new EnderecoDTO(entity.getEndereco());
         usuarioDTO = new UsuarioDTO(entity.getUsuario());
-
     }
 
 }

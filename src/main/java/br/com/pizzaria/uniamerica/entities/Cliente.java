@@ -26,7 +26,7 @@ public class Cliente extends AbstractEntity{
     @Getter
     @Setter
     @ManyToOne
-    @NotNull
+
     @JoinColumn(name = "endereco_id",nullable = false)
     private Endereco endereco;
     @Getter
