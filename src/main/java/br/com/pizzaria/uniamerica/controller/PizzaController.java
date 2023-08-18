@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/pizza")
+@RequestMapping("api/pizza")
 public class PizzaController {
     @Autowired
     private PizzaService pizzaService;

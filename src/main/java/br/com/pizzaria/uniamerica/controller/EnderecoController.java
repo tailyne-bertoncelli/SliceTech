@@ -10,7 +10,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/endereco")
+@RequestMapping("api/endereco")
 public class EnderecoController {
     @Autowired
     private EnderecoService enderecoService;

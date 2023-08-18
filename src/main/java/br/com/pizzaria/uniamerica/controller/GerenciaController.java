@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/relatorio")
+@RequestMapping("api/relatorio")
 public class GerenciaController {
     @Autowired
     private GerenciaService gerenciaService;

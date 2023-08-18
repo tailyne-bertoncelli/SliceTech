@@ -2,6 +2,7 @@ package br.com.pizzaria.uniamerica.entities;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,9 +26,12 @@ public class Usuario extends AbstractEntity{
     private String senha;
     @Getter
     @Setter
-    @Column(name = "email")
+    @Column(name = "email",unique = true)
     private String email;
     @Enumerated(EnumType.STRING)
+    @Getter
+    @Setter
+    @NotNull
     private Cargo cargo;
 
     public Usuario(String login, String senha, String email, Cargo cargo) {
