@@ -59,6 +59,11 @@ public class PedidoService {
         }
     }
 
+    @Transactional
+    public void statusCancelado(Long id){
+        this.pedidosRepository.statusCancelado(id);
+    }
+
     private Pedido copyDtoToEntity(PedidoDTO pedidoDTO, Pizza pizza) {
         Pedido pedido = new Pedido();
         Cliente cliente = new Cliente();

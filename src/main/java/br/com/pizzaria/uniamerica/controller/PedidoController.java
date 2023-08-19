@@ -44,4 +44,14 @@ public class PedidoController {
         pedidoDTO = pedidoService.update(id,pedidoDTO);
         return ResponseEntity.ok(pedidoDTO);
     }
+
+    @PutMapping("/cancelar/{id}")
+    public ResponseEntity<?>Cancelar(@PathVariable Long id){
+        try {
+            this.pedidoService.statusCancelado(id);
+            return ResponseEntity.ok("Pedido desativado com sucesso!");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Pedido não encontrado");
+        }
+    }
 }
