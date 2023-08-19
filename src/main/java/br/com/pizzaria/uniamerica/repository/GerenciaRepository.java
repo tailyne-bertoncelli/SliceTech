@@ -16,7 +16,7 @@ public interface GerenciaRepository extends JpaRepository<Pedido, Long> {
     @Query("SELECT pedido FROM Pedido pedido WHERE pedido.cadastro = :data")
     List<Pedido> totalPedidos(@Param("data") LocalDate date);
 
-    @Query("SELECT pedido FROM Pedido pedido WHERE pedido.cadastro = :data AND pedido.situacao = true")
+    @Query("SELECT pedido FROM Pedido pedido WHERE pedido.cadastro = :data AND pedido.situacao = false")
     List<Pedido> totalPedidosEncerrados(@Param("data") LocalDate date);
 
     @Query("SELECT pedido FROM Pedido pedido WHERE pedido.cadastro = :data AND pedido.entrega = true")

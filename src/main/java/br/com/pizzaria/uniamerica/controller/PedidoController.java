@@ -54,4 +54,14 @@ public class PedidoController {
             return ResponseEntity.badRequest().body("Pedido não encontrado");
         }
     }
+
+    @PutMapping("/encerrar/{id}")
+    public ResponseEntity<?>Encerrar(@PathVariable Long id){
+        try {
+            this.pedidoService.statusSituacao(id);
+            return ResponseEntity.ok("Pedido encerrado com sucesso!");
+        } catch (RuntimeException e){
+            return ResponseEntity.badRequest().body("Pedido não encontrado");
+        }
+    }
 }
