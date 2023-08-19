@@ -61,7 +61,7 @@ public class GerenciaService {
                 PrintWriter escreveNoArquivo = new PrintWriter(buffer);
         ){
             for (int i = 0; i < list.size(); i++) {
-                String situacao = list.get(i).isSituacao() ? "Encerrado" : "Em andamento";
+                String situacao = list.get(i).isSituacao() ? "Em andamento" : "Encerrado";
                 String cancelado = list.get(i).isAtivo() ? "Efetuado" : "Cancelado";
                 String entrega = list.get(i).isEntrega() ? "Sim" : "Não";
 

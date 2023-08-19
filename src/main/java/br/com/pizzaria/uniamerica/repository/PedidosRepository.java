@@ -10,4 +10,8 @@ public interface PedidosRepository extends JpaRepository<Pedido,Long> {
     @Modifying
     @Query("UPDATE Pedido pedido SET pedido .ativo=false WHERE pedido.id = :id")
     public void statusCancelado(@Param("id")Long id);
+
+    @Modifying
+    @Query("UPDATE Pedido pedido SET pedido.situacao=false WHERE pedido.situacao = :id")
+    public void statusEncerrado(@Param("id")Long id);
 }

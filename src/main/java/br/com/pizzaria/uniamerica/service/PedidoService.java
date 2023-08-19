@@ -79,4 +79,8 @@ public class PedidoService {
         return pedido;
     }
 
+    @Transactional
+    public void statusSituacao(Long id){
+        this.pedidosRepository.statusEncerrado(id);
+    }
 }
