@@ -9,6 +9,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -40,41 +41,44 @@ public class GerenciaService {
         return pedidoList;
     }
 
-    public double totalPedidosDinheiro(LocalDate date){
-        double total = this.gerenciaRepository.valorTotalVendasDinheiro(date);
-        //escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-dinheiro-"+ date +".txt", String.valueOf(total));
-        return total;
+    public List<Pedido> pedidosCancelados(LocalDate date){
+        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosCancelados(date);
+        escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-cancelados-"+ date +".txt", pedidoList);
+        return pedidoList;
     }
 
-    public double totalPedidosCartao(LocalDate date){
-        double total = this.gerenciaRepository.valorTotalVendasCartao(date);
-        //escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-pago-cartao-"+ date +".txt", String.valueOf(total));
-        return total;
+    public void valorTotalPedidos(LocalDate date){
+        BigDecimal dinheiro = this.gerenciaRepository.valorTotalVendasDinheiro(date);
+        BigDecimal cartao = this.gerenciaRepository.valorTotalVendasCartao(date);
+        relatorioTotais("C:\\Users\\pc\\OneDrive\\Documentos\\valor-total"+ date +".txt", dinheiro, cartao);
     }
+
 
     private void escreveTxt(String caminho, List<Pedido> list) {
-
-        
         try (
                 FileWriter criaArquivo = new FileWriter(caminho, false); //false para apagar o conteúdo anterior e escrever de novo
                 BufferedWriter buffer = new BufferedWriter(criaArquivo);
                 PrintWriter escreveNoArquivo = new PrintWriter(buffer);
         ){
-
             for (int i = 0; i < list.size(); i++) {
+                String situacao = list.get(i).isSituacao() ? "Encerrado" : "Em andamento";
+                String cancelado = list.get(i).isAtivo() ? "Efetuado" : "Cancelado";
+                String entrega = list.get(i).isEntrega() ? "Sim" : "Não";
+
                 String comprovante = "---------- PEDIDO "+ i + " ----------" + "\n" +
-                                "Status: " + list.get(i).isSituacao() + "\n" +
-                                "Data: " + list.get(i).getCadastro().toString() + "\n" +
-                                "Pizza: " + list.get(i).getPizza().getDescricao().toString() + "\n" +
-                                "Tamanho: "+ list.get(i).getPizza().getTamanhoPizza().toString() + "\n" +
-                                "Observação: "+ list.get(i).getDescricao().toString() + "\n" +
-                                "\n" +
-                                "Pedido para entrega? " + list.get(i).isEntrega() + "\n" +
-                                "Cliente: "+ list.get(i).getCliente().getNome().toString()+ "\n" +
-                                "Endereço: " + list.get(i).getCliente().getEndereco().getLogradouro().toString() + ", " + list.get(i).getCliente().getEndereco().getNumero().toString() + "\n" +
-                                "\n" +
-                                "Forma de pagamento: " + list.get(i).getFormaDePagamento().toString() + "\n" +
-                                "Valor total: R$ " + list.get(i).getValor();
+                                    "Status: " + cancelado + "\n" +
+                                    "Situação: " + situacao + "\n" +
+                                    "Data: " + list.get(i).getCadastro().toString() + "\n" +
+                                    "Pizza: " + list.get(i).getPizza().getDescricao().toString() + "\n" +
+                                    "Tamanho: "+ list.get(i).getPizza().getTamanhoPizza().toString() + "\n" +
+                                    "Observação: "+ list.get(i).getDescricao().toString() + "\n" +
+                                    "\n" +
+                                    "Pedido para entrega? " + entrega + "\n" +
+                                    "Cliente: "+ list.get(i).getCliente().getNome().toString()+ "\n" +
+                                    "Endereço: " + list.get(i).getCliente().getEndereco().getLogradouro().toString() + ", " + list.get(i).getCliente().getEndereco().getNumero().toString() + "\n" +
+                                    "\n" +
+                                    "Forma de pagamento: " + list.get(i).getFormaDePagamento().toString() + "\n" +
+                                    "Valor total: R$ " + list.get(i).getValor();
 
                 escreveNoArquivo.append(comprovante);
             }
@@ -83,17 +87,17 @@ public class GerenciaService {
         }
     }
 
-//    private void deixaListaBonitinha(List<Pedido> pedidoList) {
-//        for (int i = 0; i < pedidoList.size(); i++) {
-//            System.out.println("----- PEDIDO "+ i + "-----");
-//            System.out.println("Pizza - "+ pedidoList.get(i).getPizza());
-//            System.out.println("Sabor - "+ pedidoList.get(i).getSabor());
-//            System.out.println("Descricao - "+ pedidoList.get(i).getDescricao());
-//            System.out.println("Valor - " + pedidoList.get(i).getValor());
-//            System.out.println("Entrega - "+ pedidoList.get(i).isEntrega());
-//            System.out.println("Situação - "+ pedidoList.get(i).isSituacao());
-//            System.out.println("Cliente - " + pedidoList.get(i).getCliente());
-//            System.out.println("Produtos adicionais - "+ pedidoList.get(i).getProdutosList());
-//        }
-//    }
+    private void relatorioTotais(String caminho, BigDecimal dinheiro, BigDecimal cartao) {
+        try (
+                FileWriter criaArquivo = new FileWriter(caminho, false); //false para apagar o conteúdo anterior e escrever de novo
+                BufferedWriter buffer = new BufferedWriter(criaArquivo);
+                PrintWriter escreveNoArquivo = new PrintWriter(buffer);
+        ){
+            escreveNoArquivo.append("Valor total de vendas no dinheiro R$" + dinheiro + "\n");
+            escreveNoArquivo.append("Valor total de vendas no cartão R$" + cartao);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
 }

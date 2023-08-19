@@ -49,19 +49,20 @@ public class GerenciaController {
         }
     }
 
-    @GetMapping("/vendas-cartao")
-    public ResponseEntity<?> pedidosCartao(@RequestParam LocalDate date){
+    @GetMapping("/pedidos-cancelados")
+    public ResponseEntity<?> pedidosCancelados(@RequestParam LocalDate date){
         try {
-            return ResponseEntity.ok(this.gerenciaService.totalPedidosCartao(date));
+            return ResponseEntity.ok(this.gerenciaService.pedidosCancelados(date));
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping("/vendas-dinheiro")
-    public ResponseEntity<?> pedidosDinheiro(@RequestParam LocalDate date){
+    @GetMapping("/vendas-totais")
+    public ResponseEntity<?> valoresVendas(@RequestParam LocalDate date){
         try {
-            return ResponseEntity.ok(this.gerenciaService.totalPedidosDinheiro(date));
+            this.gerenciaService.valorTotalPedidos(date);
+            return ResponseEntity.ok("Verifique os valores no txt!");
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
