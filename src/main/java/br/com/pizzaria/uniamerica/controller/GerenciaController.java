@@ -23,7 +23,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/pedidos-encerrados")
-    public ResponseEntity<?> pedidosEncerrados(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosEncerrados(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.pedidosEncerrados(date));
         } catch (Exception e){
@@ -32,7 +32,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/pedidos-entrega")
-    public ResponseEntity<?> pedidosEntrega(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosEntrega(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.pedidosEntrega(date));
         } catch (Exception e){
@@ -41,7 +41,7 @@ public class GerenciaController {
     }
 
     @GetMapping("/pedidos-retira")
-    public ResponseEntity<?> pedidosRetira(@RequestBody LocalDate date){
+    public ResponseEntity<?> pedidosRetira(@RequestParam LocalDate date){
         try {
             return ResponseEntity.ok(this.gerenciaService.pedidosRetira(date));
         }catch (Exception e){
@@ -49,19 +49,20 @@ public class GerenciaController {
         }
     }
 
-    @GetMapping("/vendas-cartao")
-    public ResponseEntity<?> pedidosCartao(@RequestBody LocalDate date){
+    @GetMapping("/pedidos-cancelados")
+    public ResponseEntity<?> pedidosCancelados(@RequestParam LocalDate date){
         try {
-            return ResponseEntity.ok(this.gerenciaService.totalPedidosCartao(date));
+            return ResponseEntity.ok(this.gerenciaService.pedidosCancelados(date));
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @GetMapping("/vendas-dinheiro")
-    public ResponseEntity<?> pedidosDinheiro(@RequestBody LocalDate date){
+    @GetMapping("/vendas-totais")
+    public ResponseEntity<?> valoresVendas(@RequestParam LocalDate date){
         try {
-            return ResponseEntity.ok(this.gerenciaService.totalPedidosDinheiro(date));
+            this.gerenciaService.valorTotalPedidos(date);
+            return ResponseEntity.ok("Verifique os valores no txt!");
         } catch (Exception e){
             return ResponseEntity.badRequest().body(e.getMessage());
         }

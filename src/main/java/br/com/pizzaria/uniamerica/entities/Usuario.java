@@ -35,11 +35,10 @@ public class Usuario extends AbstractEntity{
     @NotNull
     private Cargo cargo;
 
-    public Usuario(String login, String senha, String email, Cargo cargo) {
+    public Usuario(String login, String senha, String email, String cargo) {
         this.login = login;
         this.senha = senha;
         this.email = email;
-        this.cargo = cargo;
+        this.cargo = Cargo.valueOf(cargo);
     }
-
 }

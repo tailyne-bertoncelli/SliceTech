@@ -33,12 +33,13 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> insert(@Valid @RequestBody UsuarioDTO usuarioDTO){
-        usuarioDTO = usuarioService.insert(usuarioDTO);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().buildAndExpand(usuarioDTO.getId()).toUri();
-        return ResponseEntity.created(uri).body(usuarioDTO);
+    public ResponseEntity<?> insert(@Valid @RequestBody UsuarioDTO usuarioDTO){
+        try {
+            return ResponseEntity.ok(this.usuarioService.insert(usuarioDTO));
+        } catch (Exception e){
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
-
     @PutMapping(value =  "/{id}")
     public ResponseEntity<UsuarioDTO> update(@Valid @PathVariable Long id,@RequestBody UsuarioDTO usuarioDTO){
         usuarioDTO = usuarioService.update(id,usuarioDTO);

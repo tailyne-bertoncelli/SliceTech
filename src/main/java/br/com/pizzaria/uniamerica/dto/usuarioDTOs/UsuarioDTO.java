@@ -30,20 +30,21 @@ public class UsuarioDTO {
     @Email
     private String email;
 
-    public UsuarioDTO(Long id, String login, String senha, String email) {
-        this.id = id;
-        this.login = login;
-        this.senha = senha;
-        this.email = email;
-    }
+    @Getter
+    @Setter
+    @Enumerated(EnumType.STRING)
+    private String cargo;
 
     public UsuarioDTO(Usuario entity) {
         id = entity.getId();
         login = entity.getLogin();
         senha = entity.getSenha();
         email = entity.getEmail();
+        cargo = String.valueOf(entity.getCargo());
 
     }
+
+
 
 
 }
