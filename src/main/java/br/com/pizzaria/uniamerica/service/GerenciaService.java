@@ -1,7 +1,7 @@
 package br.com.pizzaria.uniamerica.service;
 
 import br.com.pizzaria.uniamerica.entities.Pedido;
-import br.com.pizzaria.uniamerica.repository.GerenciaRepository;
+import br.com.pizzaria.uniamerica.repository.PedidosRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,40 +16,40 @@ import java.util.List;
 @Service
 public class GerenciaService {
     @Autowired
-    private GerenciaRepository gerenciaRepository;
+    private PedidosRepository pedidosRepository;
 
     public List<Pedido> pedidosDoDia(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidos(date);
+        List<Pedido> pedidoList = this.pedidosRepository.totalPedidos(date);
         escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-dia-"+ date +".txt", pedidoList);
         return pedidoList;
     }
     public List<Pedido> pedidosEncerrados(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEncerrados(date);
+        List<Pedido> pedidoList = this.pedidosRepository.totalPedidosEncerrados(date);
         escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-encerrados-"+ date +".txt", pedidoList);
         return pedidoList;
     }
 
     public List<Pedido> pedidosEntrega(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosEntrega(date);
+        List<Pedido> pedidoList = this.pedidosRepository.totalPedidosEntrega(date);
         escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-entrega-"+ date +".txt",pedidoList);
         return pedidoList;
     }
 
     public List<Pedido> pedidosRetira(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosRetira(date);
+        List<Pedido> pedidoList = this.pedidosRepository.totalPedidosRetira(date);
         escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-retira-"+ date +".txt", pedidoList);
         return pedidoList;
     }
 
     public List<Pedido> pedidosCancelados(LocalDate date){
-        List<Pedido> pedidoList = this.gerenciaRepository.totalPedidosCancelados(date);
+        List<Pedido> pedidoList = this.pedidosRepository.totalPedidosCancelados(date);
         escreveTxt("C:\\Users\\pc\\OneDrive\\Documentos\\pedidos-cancelados-"+ date +".txt", pedidoList);
         return pedidoList;
     }
 
     public void valorTotalPedidos(LocalDate date){
-        BigDecimal dinheiro = this.gerenciaRepository.valorTotalVendasDinheiro(date);
-        BigDecimal cartao = this.gerenciaRepository.valorTotalVendasCartao(date);
+        BigDecimal dinheiro = this.pedidosRepository.valorTotalVendasDinheiro(date);
+        BigDecimal cartao = this.pedidosRepository.valorTotalVendasCartao(date);
         relatorioTotais("C:\\Users\\pc\\OneDrive\\Documentos\\valor-total"+ date +".txt", dinheiro, cartao);
     }
 
