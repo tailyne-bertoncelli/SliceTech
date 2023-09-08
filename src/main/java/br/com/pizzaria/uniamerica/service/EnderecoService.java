@@ -4,26 +4,35 @@ import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
 import br.com.pizzaria.uniamerica.entities.Endereco;
 import br.com.pizzaria.uniamerica.repository.EnderecoRepository;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
+    private ModelMapper modelMapper;
+
     public EnderecoDTO findById(Long id){
-        Endereco enderecoDTO = this.enderecoRepository.findById(id)
+        Endereco endereco = this.enderecoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ID não encontrado"));
-        return new EnderecoDTO(enderecoDTO);
+
+        return modelMapper.map(endereco, EnderecoDTO.class);
     }
 
-    public List<Endereco> findAll(){
+    public List<EnderecoDTO> findAll(){
         List<Endereco> enderecoList = this.enderecoRepository.findAll();
-        return enderecoList;
+        List<EnderecoDTO> enderecoDTOList = new ArrayList<>();
+        for (Endereco e: enderecoList) {
+            var end = modelMapper.map(e, EnderecoDTO.class);
+            enderecoDTOList.add(end);
+        }
+        return enderecoDTOList;
     }
 
     @Transactional
@@ -31,7 +40,7 @@ public class EnderecoService {
         if (enderecoDTO.getNumero() == null || enderecoDTO.getNumero() == 0){
             throw new RuntimeException("O numero não pode ser 0 ou nullo");
         }
-        Endereco endereco = new Endereco(enderecoDTO);
+        var endereco = modelMapper.map(enderecoDTO, Endereco.class);
         this.enderecoRepository.save(endereco);
         return enderecoDTO;
     }
@@ -40,24 +49,25 @@ public class EnderecoService {
         Endereco endereco1 = this.enderecoRepository.findById(endereco.getId())
                 .orElseThrow(() -> new RuntimeException("ID não encontrado"));
 
+        if (endereco1.getNumero() == null || endereco1.getNumero() == 0){
+            throw new RuntimeException("O numero não pode ser 0 ou nullo");
+        }
+
         endereco1.setLogradouro(endereco.getLogradouro());
         endereco1.setNumero(endereco.getNumero());
         endereco1.setCep(endereco.getCep());
         endereco1.setComplemento(endereco.getComplemento());
 
-        if (endereco1.getNumero() == null || endereco1.getNumero() == 0){
-            throw new RuntimeException("O numero não pode ser 0 ou nullo");
-        }
-
         this.enderecoRepository.save(endereco1);
-        EnderecoDTO enderecoDTO = new EnderecoDTO(endereco1);
-        return enderecoDTO;
+        var dtoRetorno = modelMapper.map(endereco1, EnderecoDTO.class);
+        return dtoRetorno;
     }
 
     @Transactional
-    public void desativa(Long id){
+    public String desativa(Long id){
         Endereco endereco = this.enderecoRepository.getReferenceById(id);
         endereco.setAtivo(false);
         this.enderecoRepository.save(endereco);
+        return "Endereço desativado com sucesso!";
     }
 }
