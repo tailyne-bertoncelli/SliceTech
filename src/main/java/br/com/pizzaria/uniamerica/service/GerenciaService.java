@@ -47,10 +47,11 @@ public class GerenciaService {
         return pedidoList;
     }
 
-    public void valorTotalPedidos(LocalDate date){
+    public String valorTotalPedidos(LocalDate date){
         BigDecimal dinheiro = this.pedidosRepository.valorTotalVendasDinheiro(date);
         BigDecimal cartao = this.pedidosRepository.valorTotalVendasCartao(date);
         relatorioTotais("C:\\Users\\pc\\OneDrive\\Documentos\\valor-total"+ date +".txt", dinheiro, cartao);
+        return "Confira os dados salvo no txt!";
     }
 
 
