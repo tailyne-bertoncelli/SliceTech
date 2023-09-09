@@ -8,9 +8,11 @@ import br.com.pizzaria.uniamerica.entities.Produto;
 import br.com.pizzaria.uniamerica.repository.EstoqueProdutoRepository;
 import br.com.pizzaria.uniamerica.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,20 +21,26 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
     @Autowired
     private EstoqueProdutoRepository estoqueProdutoRepository;
+    private ModelMapper modelMapper;
 
     public ProdutoDTO findById(Long id){
         Produto produto = this.produtoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-        return new ProdutoDTO(produto);
+        return modelMapper.map(produto, ProdutoDTO.class);
     }
 
-    public List<Produto> findAll(){
+    public List<ProdutoDTO> findAll(){
         List<Produto> produtoList = this.produtoRepository.findAll();
-        return produtoList;
+        List<ProdutoDTO> produtoDTOList = new ArrayList<>();
+        for (Produto p: produtoList) {
+            var prod = modelMapper.map(p, ProdutoDTO.class);
+            produtoDTOList.add(prod);
+        }
+        return produtoDTOList;
     }
 
     @Transactional
-    public Produto cadastra(ProdutoDTO produtoDTO){
+    public ProdutoDTO cadastra(ProdutoDTO produtoDTO){
         EstoqueProduto estoqueProduto = this.estoqueProdutoRepository.findById(produtoDTO.getEstoqueProduto_id())
                 .orElseThrow(()-> new RuntimeException("O produto informado não foi encontrado!"));
 
@@ -42,9 +50,9 @@ public class ProdutoService {
         double valorTotal = calculaTotalProduto(estoqueProduto, produtoDTO);
         produto.setValorTotalProduto(valorTotal);
 
-        this.produtoRepository.save(produto);
+        var prodSalvo = this.produtoRepository.save(produto);
         baixaEstoque(estoqueProduto, produto);
-        return produto;
+        return modelMapper.map(prodSalvo, ProdutoDTO.class);
     }
 
     @Transactional
@@ -56,16 +64,17 @@ public class ProdutoService {
         produtoAlterado.setQuantidade(produto.getQuantidade());
 
         this.produtoRepository.save(produtoAlterado);
-        EstoqueProdutoDTO estoqueProdutoDTO = new EstoqueProdutoDTO(produto.getProduto().getNome(), produto.getValorTotalProduto(), produto.getQuantidade());
-        return new ProdutoDetalhesDTO(estoqueProdutoDTO, produto.getQuantidade(), produtoAlterado.getValorTotalProduto());
+        var estoqueProduto = modelMapper.map(produtoAlterado, EstoqueProdutoDTO.class);
+        return new ProdutoDetalhesDTO(estoqueProduto, produto.getQuantidade(), produtoAlterado.getValorTotalProduto());
     }
 
     @Transactional
-    public void desativa(Long id){
+    public String desativa(Long id){
         Produto produto = this.produtoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         produto.setAtivo(false);
         this.produtoRepository.save(produto);
+        return "Produto destivado com sucesso!";
     }
 
     private void verificaEstoque(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
