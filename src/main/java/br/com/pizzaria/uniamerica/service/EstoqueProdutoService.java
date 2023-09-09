@@ -4,9 +4,11 @@ import br.com.pizzaria.uniamerica.dto.estoqueProdutoDTOs.EstoqueProdutoDTO;
 import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
 import br.com.pizzaria.uniamerica.repository.EstoqueProdutoRepository;
 import jakarta.transaction.Transactional;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,6 +16,7 @@ import java.util.Optional;
 public class EstoqueProdutoService {
     @Autowired
     private EstoqueProdutoRepository repository;
+    private ModelMapper modelMapper;
 
     public EstoqueProdutoDTO findById(Long id){
         EstoqueProduto estoqueProduto = repository.findById(id)
@@ -21,9 +24,14 @@ public class EstoqueProdutoService {
         return new EstoqueProdutoDTO(estoqueProduto);
     }
 
-    public List<EstoqueProduto> findAll(){
+    public List<EstoqueProdutoDTO> findAll(){
         List<EstoqueProduto> listaTodos = repository.findAll();
-        return listaTodos;
+        List<EstoqueProdutoDTO> estoqueProdutoDTOList = new ArrayList<>();
+        for (EstoqueProduto e: listaTodos) {
+            var estoqueProduto = modelMapper.map(e, EstoqueProdutoDTO.class);
+            estoqueProdutoDTOList.add(estoqueProduto);
+        }
+        return estoqueProdutoDTOList;
     }
 
     @Transactional
@@ -43,14 +51,15 @@ public class EstoqueProdutoService {
         produtoAlterado.setEstoque(estoqueProduto.getEstoque());
 
         this.repository.save(produtoAlterado);
-        return new EstoqueProdutoDTO(produtoAlterado.getNome(),produtoAlterado.getValorUnidade(), produtoAlterado.getEstoque());
+        return modelMapper.map(produtoAlterado, EstoqueProdutoDTO.class);
     }
 
     @Transactional
-    public void desativa(Long id){
+    public String desativa(Long id){
         EstoqueProduto estoqueProduto = this.repository.findById(id)
                         .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         estoqueProduto.setAtivo(false);
+        return "Produto do estoque desativado com sucesso!";
     }
 
 }
