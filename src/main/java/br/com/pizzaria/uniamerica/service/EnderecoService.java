@@ -16,20 +16,21 @@ public class EnderecoService {
     @Autowired
     private EnderecoRepository enderecoRepository;
 
-    private ModelMapper modelMapper;
 
     public EnderecoDTO findById(Long id){
         Endereco endereco = this.enderecoRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("ID não encontrado"));
 
-        return modelMapper.map(endereco, EnderecoDTO.class);
+        EnderecoDTO dto = copyToDto(endereco);
+        return dto;
     }
+
 
     public List<EnderecoDTO> findAll(){
         List<Endereco> enderecoList = this.enderecoRepository.findAll();
         List<EnderecoDTO> enderecoDTOList = new ArrayList<>();
         for (Endereco e: enderecoList) {
-            var end = modelMapper.map(e, EnderecoDTO.class);
+            var end = copyToDto(e);
             enderecoDTOList.add(end);
         }
         return enderecoDTOList;
@@ -40,9 +41,10 @@ public class EnderecoService {
         if (enderecoDTO.getNumero() == null || enderecoDTO.getNumero() == 0){
             throw new RuntimeException("O numero não pode ser 0 ou nullo");
         }
-        var endereco = modelMapper.map(enderecoDTO, Endereco.class);
+        Endereco endereco = new Endereco(enderecoDTO);
         this.enderecoRepository.save(endereco);
-        return enderecoDTO;
+        EnderecoDTO dto = copyToDto(endereco);
+        return dto;
     }
     @Transactional
     public EnderecoDTO altera(Endereco endereco){
@@ -59,7 +61,7 @@ public class EnderecoService {
         endereco1.setComplemento(endereco.getComplemento());
 
         this.enderecoRepository.save(endereco1);
-        var dtoRetorno = modelMapper.map(endereco1, EnderecoDTO.class);
+        EnderecoDTO dtoRetorno = copyToDto(endereco1);
         return dtoRetorno;
     }
 
@@ -69,5 +71,10 @@ public class EnderecoService {
         endereco.setAtivo(false);
         this.enderecoRepository.save(endereco);
         return "Endereço desativado com sucesso!";
+    }
+
+    private EnderecoDTO copyToDto(Endereco endereco) {
+        EnderecoDTO enderecoDTO = new EnderecoDTO(endereco);
+        return enderecoDTO;
     }
 }

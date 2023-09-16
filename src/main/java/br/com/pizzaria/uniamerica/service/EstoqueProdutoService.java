@@ -16,7 +16,7 @@ import java.util.Optional;
 public class EstoqueProdutoService {
     @Autowired
     private EstoqueProdutoRepository repository;
-    private ModelMapper modelMapper;
+
 
     public EstoqueProdutoDTO findById(Long id){
         EstoqueProduto estoqueProduto = repository.findById(id)
@@ -28,11 +28,12 @@ public class EstoqueProdutoService {
         List<EstoqueProduto> listaTodos = repository.findAll();
         List<EstoqueProdutoDTO> estoqueProdutoDTOList = new ArrayList<>();
         for (EstoqueProduto e: listaTodos) {
-            var estoqueProduto = modelMapper.map(e, EstoqueProdutoDTO.class);
+            EstoqueProdutoDTO estoqueProduto = copyToDto(e);
             estoqueProdutoDTOList.add(estoqueProduto);
         }
         return estoqueProdutoDTOList;
     }
+
 
     @Transactional
     public EstoqueProdutoDTO cadastra(EstoqueProdutoDTO estoqueProdutoDTO){
@@ -51,7 +52,8 @@ public class EstoqueProdutoService {
         produtoAlterado.setEstoque(estoqueProduto.getEstoque());
 
         this.repository.save(produtoAlterado);
-        return modelMapper.map(produtoAlterado, EstoqueProdutoDTO.class);
+        EstoqueProdutoDTO dto = copyToDto(produtoAlterado);
+        return dto;
     }
 
     @Transactional
@@ -62,4 +64,8 @@ public class EstoqueProdutoService {
         return "Produto do estoque desativado com sucesso!";
     }
 
+    private EstoqueProdutoDTO copyToDto(EstoqueProduto e) {
+        EstoqueProdutoDTO estoqueProdutoDTO = new EstoqueProdutoDTO(e);
+        return estoqueProdutoDTO;
+    }
 }

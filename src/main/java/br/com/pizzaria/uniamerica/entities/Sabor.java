@@ -7,23 +7,17 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.List;
 @Entity
-@NoArgsConstructor
 @Table(name = "tb_sabor", schema = "public")
+@NoArgsConstructor
+@AllArgsConstructor
 public class Sabor extends AbstractEntity{
     @Getter @Setter
     @Column(name = "nome")
     private String nome;
-    @Getter @Setter
-    @ElementCollection
-    @Column(name = "Ingredientes")
-    @CollectionTable(name = "tb_ingredientes", joinColumns = @JoinColumn(name = "sabor_id"))
-    private List<String> ingredientes;
 
     public Sabor(SaborDTO saborDTO) {
         this.nome = saborDTO.getNome();
-        this.ingredientes = saborDTO.getIngredientes();
     }
 }
 

@@ -8,7 +8,6 @@ import br.com.pizzaria.uniamerica.entities.Produto;
 import br.com.pizzaria.uniamerica.repository.EstoqueProdutoRepository;
 import br.com.pizzaria.uniamerica.repository.ProdutoRepository;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,19 +20,19 @@ public class ProdutoService {
     private ProdutoRepository produtoRepository;
     @Autowired
     private EstoqueProdutoRepository estoqueProdutoRepository;
-    private ModelMapper modelMapper;
 
     public ProdutoDTO findById(Long id){
         Produto produto = this.produtoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-        return modelMapper.map(produto, ProdutoDTO.class);
+        var dto = copyToDto(produto);
+        return dto;
     }
 
     public List<ProdutoDTO> findAll(){
         List<Produto> produtoList = this.produtoRepository.findAll();
         List<ProdutoDTO> produtoDTOList = new ArrayList<>();
         for (Produto p: produtoList) {
-            var prod = modelMapper.map(p, ProdutoDTO.class);
+            var prod = copyToDto(p);
             produtoDTOList.add(prod);
         }
         return produtoDTOList;
@@ -52,20 +51,20 @@ public class ProdutoService {
 
         var prodSalvo = this.produtoRepository.save(produto);
         baixaEstoque(estoqueProduto, produto);
-        return modelMapper.map(prodSalvo, ProdutoDTO.class);
+        ProdutoDTO dto = copyToDto(prodSalvo);
+        return dto;
     }
 
     @Transactional
     public ProdutoDetalhesDTO altera(Produto produto){
         Produto produtoAlterado = this.produtoRepository.findById(produto.getId())
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-
         produtoAlterado.setProduto(produto.getProduto());
         produtoAlterado.setQuantidade(produto.getQuantidade());
 
         this.produtoRepository.save(produtoAlterado);
-        var estoqueProduto = modelMapper.map(produtoAlterado, EstoqueProdutoDTO.class);
-        return new ProdutoDetalhesDTO(estoqueProduto, produto.getQuantidade(), produtoAlterado.getValorTotalProduto());
+        EstoqueProdutoDTO estoqueProdutoDTO = new EstoqueProdutoDTO(produto.getProduto().getNome(), produto.getValorTotalProduto(), produto.getQuantidade());
+        return new ProdutoDetalhesDTO(estoqueProdutoDTO, produto.getQuantidade(), produtoAlterado.getValorTotalProduto());
     }
 
     @Transactional
@@ -97,5 +96,12 @@ public class ProdutoService {
         int qntComprada = produtoDTO.getQuantidade();
         double total = valorUn * qntComprada;
         return total;
+    }
+
+    private ProdutoDTO copyToDto(Produto produto) {
+        ProdutoDTO produtoDTO = new ProdutoDTO();
+        produtoDTO.setQuantidade(produto.getQuantidade());
+        produtoDTO.setEstoqueProduto_id(produto.getId());
+        return produtoDTO;
     }
 }

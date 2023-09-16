@@ -16,19 +16,18 @@ public class SaborService {
     @Autowired
     private SaborRepository saborRepository;
 
-    private ModelMapper modelMapper;
-
     public SaborDTO findById(Long id){
         Sabor sabor = this.saborRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Id não encontrado"));
-        return modelMapper.map(sabor, SaborDTO.class);
+        SaborDTO dto = copyEntityToDto(sabor);
+        return dto;
     }
 
     public List<SaborDTO> findAll(){
         List<Sabor> list = this.saborRepository.findAll();
         List<SaborDTO> saborDTOList = new ArrayList<>();
         for (Sabor sabor: list) {
-            var transformaEmDTO = modelMapper.map(sabor, SaborDTO.class);
+            var transformaEmDTO = copyEntityToDto(sabor);
             saborDTOList.add(transformaEmDTO);
         }
         return saborDTOList;
@@ -38,16 +37,22 @@ public class SaborService {
     public SaborDTO altera(Sabor sabor){
         Sabor saborAlterado = this.saborRepository.findById(sabor.getId())
                 .orElseThrow(()-> new RuntimeException("Id não encontrado!"));
+
+        saborAlterado.setNome(sabor.getNome());
+
         this.saborRepository.save(saborAlterado);
-        return modelMapper.map(saborAlterado, SaborDTO.class);
+        SaborDTO dto = copyEntityToDto(saborAlterado);
+        return dto;
     }
 
     @Transactional
     public SaborDTO cadastra(SaborDTO saborDTO){
         Sabor sabor = new Sabor(saborDTO);
         this.saborRepository.save(sabor);
-        return modelMapper.map(sabor, SaborDTO.class);
+        SaborDTO dto = copyEntityToDto(sabor);
+        return dto;
     }
+
 
     @Transactional
     public String desativa(Long id){
@@ -55,5 +60,12 @@ public class SaborService {
                 .orElseThrow(()-> new RuntimeException("Id não encontrado!"));
         sabor.setAtivo(false);
         return "Sabor desativado com sucesso!";
+    }
+
+
+    private SaborDTO copyEntityToDto(Sabor sabor) {
+        SaborDTO saborDTO = new SaborDTO();
+        saborDTO.setNome(sabor.getNome());
+        return saborDTO;
     }
 }

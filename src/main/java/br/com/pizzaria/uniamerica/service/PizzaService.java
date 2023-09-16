@@ -2,7 +2,9 @@ package br.com.pizzaria.uniamerica.service;
 
 import br.com.pizzaria.uniamerica.dto.pizzaDTOs.PizzaDTO;
 import br.com.pizzaria.uniamerica.entities.Pizza;
+import br.com.pizzaria.uniamerica.entities.Sabor;
 import br.com.pizzaria.uniamerica.repository.PizzaRepository;
+import br.com.pizzaria.uniamerica.repository.SaborRepository;
 import jakarta.transaction.Transactional;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,19 +17,22 @@ import java.util.List;
 public class PizzaService {
     @Autowired
     private PizzaRepository pizzaRepository;
-    private ModelMapper modelMapper;
+    @Autowired
+    private SaborRepository saborRepository;
 
     public PizzaDTO findById(Long id){
         Pizza pizza = this.pizzaRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-        return modelMapper.map(pizza, PizzaDTO.class);
+        PizzaDTO dto = copyToDto(pizza);
+        return dto;
     }
+
 
     public List<PizzaDTO> findAll(){
         List<Pizza> pizzaList = this.pizzaRepository.findAll();
         List<PizzaDTO> pizzaDTOList = new ArrayList<>();
         for (Pizza p: pizzaList) {
-            var pizza = modelMapper.map(p, PizzaDTO.class);
+            var pizza = copyToDto(p);
             pizzaDTOList.add(pizza);
         }
         return pizzaDTOList;
@@ -35,9 +40,13 @@ public class PizzaService {
 
     @Transactional
     public PizzaDTO cadastra(PizzaDTO pizzaDTO){
-        Pizza pizza = new Pizza(pizzaDTO);
+        Sabor sabor = this.saborRepository.findById(pizzaDTO.getSabor())
+                .orElseThrow(()-> new RuntimeException("Sabor não encontrado!"));
+
+        Pizza pizza = new Pizza(pizzaDTO.getDescricao(), pizzaDTO.getValor(), sabor, pizzaDTO.getTamanhoPizza());
         this.pizzaRepository.save(pizza);
-        return modelMapper.map(pizza, PizzaDTO.class);
+        PizzaDTO dto = copyToDto(pizza);
+        return dto;
     }
 
     @Transactional
@@ -51,7 +60,8 @@ public class PizzaService {
         pizza1.setDescricao(pizza.getDescricao());
 
         this.pizzaRepository.save(pizza1);
-        return modelMapper.map(pizza1, PizzaDTO.class);
+        PizzaDTO dto = copyToDto(pizza1);
+        return dto;
     }
 
     @Transactional
@@ -61,5 +71,11 @@ public class PizzaService {
         pizza.setAtivo(false);
         this.pizzaRepository.save(pizza);
         return "A pizza foi desativada com sucesso!";
+    }
+
+
+    private PizzaDTO copyToDto(Pizza pizza) {
+        PizzaDTO pizzaDTO = new PizzaDTO(pizza);
+        return pizzaDTO;
     }
 }

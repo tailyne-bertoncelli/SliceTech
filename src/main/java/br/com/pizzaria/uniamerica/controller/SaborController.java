@@ -2,7 +2,6 @@ package br.com.pizzaria.uniamerica.controller;
 
 import br.com.pizzaria.uniamerica.dto.saborDTOs.SaborDTO;
 import br.com.pizzaria.uniamerica.entities.Sabor;
-import br.com.pizzaria.uniamerica.repository.SaborRepository;
 import br.com.pizzaria.uniamerica.service.SaborService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,7 +26,7 @@ public class SaborController {
         }
     }
 
-    @GetMapping("lista-sabores")
+    @GetMapping("/lista-sabores")
     public ResponseEntity<List<SaborDTO>> findAll(){
         try {
             return ResponseEntity.ok(this.saborService.findAll());
@@ -46,7 +45,7 @@ public class SaborController {
     }
 
     @PutMapping
-    public ResponseEntity<SaborDTO> altera(@RequestParam Sabor sabor){
+    public ResponseEntity<SaborDTO> altera(@RequestBody Sabor sabor){
         try {
             return ResponseEntity.ok(this.saborService.altera(sabor));
         } catch (Exception e){
@@ -54,7 +53,7 @@ public class SaborController {
         }
     }
 
-    @PutMapping("desativa")
+    @PutMapping("/desativa")
     public ResponseEntity<String> desativar(@RequestParam Long id){
         try {
             return ResponseEntity.ok(this.saborService.desativa(id));
