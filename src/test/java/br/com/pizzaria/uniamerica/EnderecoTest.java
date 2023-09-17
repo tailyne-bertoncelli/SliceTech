@@ -1,5 +1,6 @@
 package br.com.pizzaria.uniamerica;
 
+import br.com.pizzaria.uniamerica.controller.EnderecoController;
 import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
 import br.com.pizzaria.uniamerica.entities.Endereco;
 import br.com.pizzaria.uniamerica.repository.EnderecoRepository;
@@ -23,39 +24,63 @@ public class EnderecoTest {
     private EnderecoRepository enderecoRepository;
 
     @Autowired
-    private final EnderecoService enderecoService = new EnderecoService();
+    private EnderecoService enderecoService;
+
+    @Autowired
+    private EnderecoController enderecoController;
 
     @BeforeEach
     void obj(){
-        Optional<Endereco> endereco = Optional.of(new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina"));
-        Long id = 1L;
-        Mockito.when(enderecoRepository.findById(id)).thenReturn(endereco);
+        Endereco endereco = new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina");
+        endereco.setId(1L);
+        endereco.setAtivo(true);
 
         List<Endereco> enderecoList = new ArrayList<>();
         enderecoList.add(new Endereco("Avenida Republica Argentina", 888L, "85869-580", "Casa marrom"));
         enderecoList.add(new Endereco("Avenida Alemanha", 2489L, "85854-890", "Casa azul"));
         enderecoList.add(new Endereco("Rua 265", 152L, "85869-412", "Sobrado preto e branco"));
+
         Mockito.when(enderecoRepository.findAll()).thenReturn(enderecoList);
-    }
-
-    @BeforeEach
-    void endereco(){
-        Endereco endereco = new Endereco();
-        endereco.setId(1L);
-        endereco.setLogradouro("Avenida Brasil");
-        endereco.setNumero(1070L);
-        endereco.setCep("85862-570");
-        endereco.setComplemento("Lado direito");
-
+        Mockito.when(enderecoRepository.findById(1L)).thenReturn(Optional.of(endereco));
         Mockito.when(enderecoRepository.save(endereco)).thenReturn(endereco);
     }
 
     @Test
     void testFindById(){
-        var endereco = enderecoService.findById(1L);
-        EnderecoDTO enderecoDTO = new EnderecoDTO(endereco.getId(), endereco.getLogradouro(), endereco.getNumero(), endereco.getCep(), endereco.getComplemento());
-        Long id = enderecoDTO.getId().longValue();
-        Assert.assertEquals(1L, id, 0);
+        var endereco = enderecoController.buscaPeloId(1L);
+        Assert.assertEquals(1L, endereco.getBody().getId(), 0);
+    }
 
+    @Test
+    void testFindAll(){
+        var endereco = enderecoController.buscaTodos();
+        Assert.assertEquals(3, endereco.getBody().size(), 0);
+    }
+
+    @Test
+    void testCadastra(){
+        EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Avenida Brasil", 321L, "85862-570", "Esquina");
+        var endereco = enderecoController.cadastra(enderecoDTO);
+        var id = endereco.getBody().getId();
+        Assert.assertEquals(id, endereco.getBody().getId());
+    }
+
+    @Test
+    void testAltera(){
+        Endereco endereco = new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina");
+        endereco.setId(1L);
+        var testa = enderecoController.altera(endereco);
+        EnderecoDTO enderecoDTO = new EnderecoDTO(endereco);
+        Assert.assertEquals(enderecoDTO.getId(), testa.getBody().getId());
+    }
+
+    @Test
+    void testDesativa(){
+//        Endereco endereco = new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina");
+//        endereco.setId(1L);
+//        endereco.setAtivo(true);
+
+        var teste = enderecoController.desativa(1L);
+        Assert.assertEquals("Desativado com sucesso", teste.getBody());
     }
 }
