@@ -7,9 +7,13 @@ import br.com.pizzaria.uniamerica.repository.ProdutoRepository;
 import br.com.pizzaria.uniamerica.service.ProdutoService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/produto")
@@ -18,48 +22,47 @@ public class ProdutoController {
     private ProdutoService produtoService;
 
     @GetMapping
-    public ResponseEntity<?> buscaPeloId(@RequestParam Long id){
+    public ResponseEntity<ProdutoDTO> buscaPeloId(@RequestParam Long id){
         try{
             return ResponseEntity.ok(this.produtoService.findById(id));
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     @GetMapping("/lista-todos")
-    public ResponseEntity<?> listaTodos(){
+    public ResponseEntity<List<ProdutoDTO>> listaTodos(){
         try {
             return ResponseEntity.ok(this.produtoService.findAll());
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     @PostMapping
-    public ResponseEntity<?> cadastra(@RequestBody @Validated ProdutoDTO produtoDTO){
+    public ResponseEntity<ProdutoDTO> cadastra(@RequestBody @Validated ProdutoDTO produtoDTO){
         try {
             return ResponseEntity.ok(this.produtoService.cadastra(produtoDTO));
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     @PutMapping("/altera")
-    public ResponseEntity<?> altera(@RequestBody @Validated Produto produto){
+    public ResponseEntity<ProdutoDetalhesDTO> altera(@RequestBody @Validated Produto produto){
         try {
             return ResponseEntity.ok(this.produtoService.altera(produto));
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 
     @PutMapping("/desativa")
-    public ResponseEntity<?> desativa(@RequestParam Long id){
+    public ResponseEntity<String> desativa(@RequestParam Long id){
         try {
-            this.produtoService.desativa(id);
-            return ResponseEntity.ok("ID desativado com sucesso!");
+            return ResponseEntity.ok(this.produtoService.desativa(id));
         } catch (Exception e){
-            return ResponseEntity.badRequest().body(e.getMessage());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }
     }
 }

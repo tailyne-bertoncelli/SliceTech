@@ -25,6 +25,12 @@ public class Pizza extends AbstractEntity {
     @Column(name = "valor")
     private double valor;
 
+    @Getter @Setter
+    @ManyToOne
+    @JsonBackReference
+    @JoinColumn(name = "sabor", nullable = false)
+    private Sabor sabor;
+
     @Enumerated(EnumType.STRING)
     @Getter @Setter
     private TamanhoPizza tamanhoPizza;
@@ -35,10 +41,11 @@ public class Pizza extends AbstractEntity {
     @JsonManagedReference
     private List<Pedido> pedidoList = new ArrayList<>();
 
-    public Pizza(PizzaDTO pizzaDTO) {
-        descricao = pizzaDTO.getDescricao();
-        valor = pizzaDTO.getValor();
-        tamanhoPizza = pizzaDTO.getTamanhoPizza();
+    public Pizza(String descricao, double valor, Sabor sabor, TamanhoPizza tamanhoPizza) {
+        this.descricao = descricao;
+        this.valor = valor;
+        this.sabor = sabor;
+        this.tamanhoPizza = tamanhoPizza;
     }
 
     public String getDescricao() {
