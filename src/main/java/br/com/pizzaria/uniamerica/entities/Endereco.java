@@ -38,4 +38,11 @@ public class Endereco extends AbstractEntity{
         this.cep = enderecoDTO.getCep();
         this.complemento = enderecoDTO.getComplemento();
     }
+
+    public Endereco(String logradouro, Long numero, String cep, String complemento) {
+        this.logradouro = logradouro;
+        this.numero = numero;
+        this.cep = cep;
+        this.complemento = complemento;
+    }
 }
