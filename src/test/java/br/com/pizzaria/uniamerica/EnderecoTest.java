@@ -73,6 +73,10 @@ public class EnderecoTest {
 
     @Test
     void testDesativa(){
+        Endereco endereco = new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina");
+        endereco.setId(1L);
+        endereco.setAtivo(true);
+
         var teste = enderecoController.desativa(1L);
         Assert.assertEquals("Endereço desativado com sucesso!", teste.getBody());
     }
