@@ -24,9 +24,6 @@ public class EnderecoTest {
     private EnderecoRepository enderecoRepository;
 
     @Autowired
-    private EnderecoService enderecoService;
-
-    @Autowired
     private EnderecoController enderecoController;
 
     @BeforeEach
@@ -61,8 +58,8 @@ public class EnderecoTest {
     void testCadastra(){
         EnderecoDTO enderecoDTO = new EnderecoDTO(1L, "Avenida Brasil", 321L, "85862-570", "Esquina");
         var endereco = enderecoController.cadastra(enderecoDTO);
-        var id = endereco.getBody().getId();
-        Assert.assertEquals(id, endereco.getBody().getId());
+        EnderecoDTO enderecoDTO1 = new EnderecoDTO(endereco.getBody().getId(), endereco.getBody().getLogradouro(), endereco.getBody().getNumero(), endereco.getBody().getCep(), endereco.getBody().getComplemento());
+        Assert.assertEquals(enderecoDTO1.getId(), endereco.getBody().getId());
     }
 
     @Test
@@ -76,11 +73,7 @@ public class EnderecoTest {
 
     @Test
     void testDesativa(){
-//        Endereco endereco = new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina");
-//        endereco.setId(1L);
-//        endereco.setAtivo(true);
-
         var teste = enderecoController.desativa(1L);
-        Assert.assertEquals("Desativado com sucesso", teste.getBody());
+        Assert.assertEquals("Endereço desativado com sucesso!", teste.getBody());
     }
 }
