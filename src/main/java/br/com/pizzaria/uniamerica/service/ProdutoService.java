@@ -11,6 +11,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -23,16 +24,22 @@ public class ProdutoService {
     public ProdutoDTO findById(Long id){
         Produto produto = this.produtoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-        return new ProdutoDTO(produto);
+        var dto = copyToDto(produto);
+        return dto;
     }
 
-    public List<Produto> findAll(){
+    public List<ProdutoDTO> findAll(){
         List<Produto> produtoList = this.produtoRepository.findAll();
-        return produtoList;
+        List<ProdutoDTO> produtoDTOList = new ArrayList<>();
+        for (Produto p: produtoList) {
+            var prod = copyToDto(p);
+            produtoDTOList.add(prod);
+        }
+        return produtoDTOList;
     }
 
     @Transactional
-    public Produto cadastra(ProdutoDTO produtoDTO){
+    public ProdutoDTO cadastra(ProdutoDTO produtoDTO){
         EstoqueProduto estoqueProduto = this.estoqueProdutoRepository.findById(produtoDTO.getEstoqueProduto_id())
                 .orElseThrow(()-> new RuntimeException("O produto informado não foi encontrado!"));
 
@@ -42,16 +49,16 @@ public class ProdutoService {
         double valorTotal = calculaTotalProduto(estoqueProduto, produtoDTO);
         produto.setValorTotalProduto(valorTotal);
 
-        this.produtoRepository.save(produto);
+        var prodSalvo = this.produtoRepository.save(produto);
         baixaEstoque(estoqueProduto, produto);
-        return produto;
+        ProdutoDTO dto = copyToDto(prodSalvo);
+        return dto;
     }
 
     @Transactional
     public ProdutoDetalhesDTO altera(Produto produto){
         Produto produtoAlterado = this.produtoRepository.findById(produto.getId())
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-
         produtoAlterado.setProduto(produto.getProduto());
         produtoAlterado.setQuantidade(produto.getQuantidade());
 
@@ -61,11 +68,12 @@ public class ProdutoService {
     }
 
     @Transactional
-    public void desativa(Long id){
+    public String desativa(Long id){
         Produto produto = this.produtoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
         produto.setAtivo(false);
         this.produtoRepository.save(produto);
+        return "Produto destivado com sucesso!";
     }
 
     private void verificaEstoque(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
@@ -88,5 +96,12 @@ public class ProdutoService {
         int qntComprada = produtoDTO.getQuantidade();
         double total = valorUn * qntComprada;
         return total;
+    }
+
+    private ProdutoDTO copyToDto(Produto produto) {
+        ProdutoDTO produtoDTO = new ProdutoDTO();
+        produtoDTO.setQuantidade(produto.getQuantidade());
+        produtoDTO.setEstoqueProduto_id(produto.getId());
+        return produtoDTO;
     }
 }
