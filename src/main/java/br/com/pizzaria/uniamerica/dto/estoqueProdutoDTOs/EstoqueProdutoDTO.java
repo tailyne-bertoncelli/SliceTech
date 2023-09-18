@@ -10,6 +10,9 @@ import lombok.Setter;
 
 public class EstoqueProdutoDTO {
     @Getter @Setter
+    private Long id;
+
+    @Getter @Setter
     @NotBlank(message = "O nome do produto não pode null ou em branco!")
     private String nome;
     @Getter @Setter
@@ -28,5 +31,9 @@ public class EstoqueProdutoDTO {
         this.nome = nome;
         this.valorUnidade = valor;
         this.estoque = estoque;
+    }
+
+    public EstoqueProdutoDTO() {
+
     }
 }
