@@ -76,9 +76,9 @@ public class EnderecoTest {
 
     @Test
     void testDesativa(){
-//        Endereco endereco = new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina");
-//        endereco.setId(1L);
-//        endereco.setAtivo(true);
+        Endereco endereco = new Endereco("Avenida Brasil", 321L, "85862-570", "Esquina");
+        endereco.setId(1L);
+        endereco.setAtivo(true);
 
         var teste = enderecoController.desativa(1L);
         Assert.assertEquals("Desativado com sucesso", teste.getBody());
