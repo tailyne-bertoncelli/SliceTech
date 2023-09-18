@@ -13,6 +13,8 @@ import java.util.Optional;
 @NoArgsConstructor
 public class ProdutoDTO {
     @Getter @Setter
+    private Long id;
+    @Getter @Setter
     private Long estoqueProduto_id;
     @Getter @Setter
     @Min(value = 1, message = "Informe a quantidade do produto!")
