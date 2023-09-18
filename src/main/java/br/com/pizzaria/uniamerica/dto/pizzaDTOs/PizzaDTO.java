@@ -16,6 +16,8 @@ import java.util.Optional;
 @NoArgsConstructor
 public class PizzaDTO {
     @Getter @Setter
+    private Long id;
+    @Getter @Setter
     @NotBlank(message = "O sabor não pode ser null ou vazio!")
     private Long sabor;
     @Getter @Setter
@@ -29,6 +31,7 @@ public class PizzaDTO {
     private TamanhoPizza tamanhoPizza;
 
     public PizzaDTO(Pizza pizza1) {
+        this.id = pizza1.getId();
         this.sabor = pizza1.getSabor().getId();
         this.descricao = pizza1.getDescricao();
         this.valor = pizza1.getValor();

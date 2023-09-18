@@ -67,7 +67,8 @@ public class EnderecoService {
 
     @Transactional
     public String desativa(Long id){
-        Endereco endereco = this.enderecoRepository.getReferenceById(id);
+        Endereco endereco = this.enderecoRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("Id não encontrado!"));
         endereco.setAtivo(false);
         this.enderecoRepository.save(endereco);
         return "Endereço desativado com sucesso!";
