@@ -28,8 +28,6 @@ public class PizzaTest {
     private SaborRepository saborRepository;
     @Autowired
     private PizzaController pizzaController;
-    @Autowired
-    private PizzaService pizzaService;
 
     @BeforeEach
     void obj(){
@@ -66,17 +64,41 @@ public class PizzaTest {
         pizzaDTO.setTamanhoPizza(TamanhoPizza.GRANDE);
         pizzaDTO.setDescricao("Adicionar extra de queijo");
 
-        var pizza = pizzaService.cadastra(pizzaDTO);
+        var pizza = pizzaController.cadastra(pizzaDTO);
 
         PizzaDTO pizzaDTOretorno = new PizzaDTO();
-        pizzaDTO.setId(pizza.getId());
-        pizzaDTO.setSabor(pizza.getSabor());
-        pizzaDTO.setValor(pizza.getValor());
-        pizzaDTO.setTamanhoPizza(pizza.getTamanhoPizza());
-        pizzaDTO.setDescricao(pizza.getDescricao());
+        pizzaDTO.setId(pizza.getBody().getId());
+        pizzaDTO.setSabor(pizza.getBody().getSabor());
+        pizzaDTO.setValor(pizza.getBody().getValor());
+        pizzaDTO.setTamanhoPizza(pizza.getBody().getTamanhoPizza());
+        pizzaDTO.setDescricao(pizza.getBody().getDescricao());
 
-        Assert.assertEquals(pizzaDTOretorno.getId(), pizza.getId());
+        Assert.assertEquals(pizzaDTOretorno.getId(), pizza.getBody().getId());
     }
 
+    @Test
+    void testFindAll(){
+        var pizza = pizzaController.listaTodos();
+        Assert.assertEquals(3, pizza.getBody().size());
+    }
 
+    @Test
+    void testAltera(){
+        Sabor sabor = new Sabor("Frango");
+        sabor.setId(1L);
+
+        Pizza pizza = new Pizza("Sem cebola", 89.90, sabor,TamanhoPizza.GRANDE);
+        pizza.setId(1L);
+
+        var teste = pizzaController.altera(pizza);
+        PizzaDTO pizzaDTO = new PizzaDTO(pizza);
+
+        Assert.assertEquals(pizzaDTO.getId(), teste.getBody().getId());
+    }
+
+    @Test
+    void testDesativa(){
+        var pizza = pizzaController.desativa(1L);
+        Assert.assertEquals("A pizza foi desativada com sucesso!", pizza.getBody());
+    }
 }
