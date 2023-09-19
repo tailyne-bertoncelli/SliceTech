@@ -2,6 +2,7 @@ package br.com.pizzaria.uniamerica.controller;
 
 import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 
+import br.com.pizzaria.uniamerica.entities.Usuario;
 import br.com.pizzaria.uniamerica.service.UsuarioService;
 
 import jakarta.validation.Valid;

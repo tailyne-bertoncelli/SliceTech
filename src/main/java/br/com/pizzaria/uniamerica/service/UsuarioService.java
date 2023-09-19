@@ -1,6 +1,9 @@
 package br.com.pizzaria.uniamerica.service;
 
+import br.com.pizzaria.uniamerica.dto.estoqueProdutoDTOs.EstoqueProdutoDTO;
+import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDetalhesDTO;
 import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
+import br.com.pizzaria.uniamerica.entities.Produto;
 import br.com.pizzaria.uniamerica.entities.Usuario;
 import br.com.pizzaria.uniamerica.repository.UsuarioRepository;
 import br.com.pizzaria.uniamerica.service.exception.ResourceNotFoundException;

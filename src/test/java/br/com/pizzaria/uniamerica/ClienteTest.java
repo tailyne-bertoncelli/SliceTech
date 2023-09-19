@@ -2,8 +2,8 @@ package br.com.pizzaria.uniamerica;
 
 import br.com.pizzaria.uniamerica.controller.UsuarioController;
 import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
-
 import br.com.pizzaria.uniamerica.entities.Usuario;
+import br.com.pizzaria.uniamerica.repository.ClienteRepository;
 import br.com.pizzaria.uniamerica.repository.UsuarioRepository;
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
@@ -18,12 +18,11 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-class UsuarioTest {
-
+public class ClienteTest {
     @MockBean
-    private UsuarioRepository usuarioRepository;
+    private ClienteRepository clienteRepository;
     @Autowired
-    private UsuarioController usuarioController;
+    private ClienteRepository clienteRepository;
 
     @BeforeEach
     void obj(){
@@ -61,6 +60,4 @@ class UsuarioTest {
         var usuarioControllerVarEscopada = usuarioController.findAll();
         Assert.assertEquals(200, usuarioControllerVarEscopada.getStatusCode().value());
     }
-
-
 }
