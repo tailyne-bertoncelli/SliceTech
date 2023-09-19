@@ -3,9 +3,8 @@ package br.com.pizzaria.uniamerica.controller;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDTO;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDetalhesDTO;
 import br.com.pizzaria.uniamerica.entities.Produto;
-import br.com.pizzaria.uniamerica.repository.ProdutoRepository;
 import br.com.pizzaria.uniamerica.service.ProdutoService;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-public class EstoqueProdutoTest {
+class EstoqueProdutoTest {
     @MockBean
     private EstoqueProdutoRepository estoqueProdutoRepository;
     @Autowired

@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-public class ProdutoTest {
+class ProdutoTest {
     @MockBean
     private ProdutoRepository produtoRepository;
     @MockBean
@@ -61,7 +61,7 @@ public class ProdutoTest {
 //    }
 
     @Test
-    public void findAll(){
+    void findAll(){
         var teste = produtoController.listaTodos();
         Assert.assertEquals(3, teste.getBody().size());
     }

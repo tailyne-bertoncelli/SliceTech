@@ -17,7 +17,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-public class SaborTest {
+class SaborTest {
     @MockBean
     private SaborRepository saborRepository;
     @Autowired
