@@ -1,6 +1,5 @@
 package br.com.pizzaria.uniamerica.dto.usuarioDTOs;
 
-import br.com.pizzaria.uniamerica.entities.Cargo;
 import br.com.pizzaria.uniamerica.entities.Usuario;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -10,7 +9,6 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.validator.constraints.UniqueElements;
 
 @NoArgsConstructor
 @AllArgsConstructor

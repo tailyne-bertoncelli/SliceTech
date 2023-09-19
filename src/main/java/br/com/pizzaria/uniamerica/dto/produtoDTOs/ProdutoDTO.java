@@ -1,14 +1,13 @@
 package br.com.pizzaria.uniamerica.dto.produtoDTOs;
 
-import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
+
 import br.com.pizzaria.uniamerica.entities.Produto;
-import jakarta.validation.constraints.DecimalMin;
+
 import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Optional;
 
 @NoArgsConstructor
 public class ProdutoDTO {

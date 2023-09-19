@@ -4,7 +4,7 @@ import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
 import br.com.pizzaria.uniamerica.entities.Endereco;
 import br.com.pizzaria.uniamerica.repository.EnderecoRepository;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

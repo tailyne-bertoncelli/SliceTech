@@ -1,7 +1,7 @@
 package br.com.pizzaria.uniamerica.entities;
 
 
-import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
+
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;

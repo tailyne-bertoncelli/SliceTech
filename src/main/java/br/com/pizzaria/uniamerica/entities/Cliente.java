@@ -1,12 +1,13 @@
 package br.com.pizzaria.uniamerica.entities;
 
-import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
+
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+
 import lombok.Setter;
 
 import java.util.ArrayList;
@@ -47,5 +48,14 @@ public class Cliente extends AbstractEntity{
         this.endereco = endereco;
         this.nome = nome;
     }
+
+
+    public Cliente(Usuario usuario, Endereco endereco, String nome, List<Pedido> pedidoList) {
+        this.usuario = usuario;
+        this.endereco = endereco;
+        this.nome = nome;
+        this.pedidoList = pedidoList;
+    }
+
 
 }

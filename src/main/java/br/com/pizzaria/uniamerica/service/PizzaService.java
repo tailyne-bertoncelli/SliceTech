@@ -6,7 +6,7 @@ import br.com.pizzaria.uniamerica.entities.Sabor;
 import br.com.pizzaria.uniamerica.repository.PizzaRepository;
 import br.com.pizzaria.uniamerica.repository.SaborRepository;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

@@ -1,12 +1,13 @@
 package br.com.pizzaria.uniamerica.dto.clienteDTOs;
 
 
-import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
+
 import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
-import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
+
 import br.com.pizzaria.uniamerica.entities.*;
-import jakarta.persistence.*;
+
 import jakarta.validation.constraints.NotNull;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -15,8 +16,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
+@Getter
+@Setter
 public class ClienteDTO {
 
+    @Getter
+    @Setter
+    private Long id;
     @Getter
     @Setter
     @NotNull
@@ -36,6 +42,13 @@ public class ClienteDTO {
         this.usuarioId = usuarioId;
         this.enderecoId = enderecoId;
         this.pedidoList = pedidoList;
+    }
+
+    public ClienteDTO( String nome, Long usuarioId, Long enderecoId) {
+        this.nome = nome;
+        this.usuarioId = usuarioId;
+        this.enderecoId = enderecoId;
+
     }
 
     public ClienteDTO(Cliente entity) {

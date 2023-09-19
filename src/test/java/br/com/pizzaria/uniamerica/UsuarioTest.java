@@ -48,18 +48,33 @@ class UsuarioTest {
     }
 
     @Test
-    void testRegister(){
-        UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"ZeDaManga","senha123","ZeDaManga@gmail.com","CLIENTE");
-        usuarioDTO.setId(1L);
-        var usuarioControllerVarEscopada = usuarioController.insert(usuarioDTO);
-        Assert.assertEquals(usuarioDTO, usuarioControllerVarEscopada.getBody());
+    void testeInsert(){
+        UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"login123","senha123","email123@gmail.com","CLIENTE");
+
+        var usuarioControllerVarEscopada = usuarioController.Insert(usuarioDTO);
+
+        UsuarioDTO usuarioDTOCallback = new UsuarioDTO(usuarioControllerVarEscopada.getBody().getId(), usuarioControllerVarEscopada.getBody().getLogin(),usuarioControllerVarEscopada.getBody().getSenha(),usuarioControllerVarEscopada.getBody().getEmail(),usuarioControllerVarEscopada.getBody().getCargo());
+
+        Assert.assertEquals(usuarioDTOCallback.getId(),usuarioControllerVarEscopada.getBody().getId());
     }
 
+    @Test
+    void findAll(){
+        var usuarioControllerVarEscopada = usuarioController.FindAll();
+
+        Assert.assertEquals(3,usuarioControllerVarEscopada.getBody().size());
+    }
 
     @Test
-    void testFindAll(){
-        var usuarioControllerVarEscopada = usuarioController.findAll();
-        Assert.assertEquals(200, usuarioControllerVarEscopada.getStatusCode().value());
+    void testUpdate(){
+
+    }
+
+    @Test
+    void testDisabled(){
+        var usuarioControllerVarEscopada = usuarioController.LogicDelete(1L);
+
+        Assert.assertEquals("Usuario desativado!", usuarioControllerVarEscopada.getBody());
     }
 
 

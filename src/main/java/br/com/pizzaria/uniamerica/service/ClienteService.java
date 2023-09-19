@@ -1,17 +1,14 @@
 package br.com.pizzaria.uniamerica.service;
 
 import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
-import br.com.pizzaria.uniamerica.entities.Cliente;
-import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
-import br.com.pizzaria.uniamerica.entities.Produto;
-import br.com.pizzaria.uniamerica.repository.ClienteRepository;
-import br.com.pizzaria.uniamerica.repository.EnderecoRepository;
-import br.com.pizzaria.uniamerica.repository.UsuarioRepository;
-import br.com.pizzaria.uniamerica.service.exception.ResourceNotFoundException;
+import br.com.pizzaria.uniamerica.entities.*;
+
+import br.com.pizzaria.uniamerica.repository.*;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -20,51 +17,75 @@ public class ClienteService {
     private ClienteRepository clienteRepository;
 
     @Autowired
-    private EnderecoRepository enderecoRepository;
-
-    @Autowired
     private UsuarioRepository usuarioRepository;
 
-    @Transactional(readOnly = true)
-    public Cliente findById(Long id){
-        Cliente cliente = clienteRepository.findById(id).orElseThrow( () -> new ResourceNotFoundException("Cliente não encontrado!"));
-        return cliente;
+    @Autowired
+    private EnderecoRepository enderecoRepository;
+
+
+    public ClienteDTO findById(Long id){
+        Cliente cliente = this.clienteRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        ClienteDTO clienteDTO = copyToDto(cliente);
+        return clienteDTO;
     }
 
-    public List<Cliente> findAll(){
-        return clienteRepository.findAll();
+
+    public List<ClienteDTO> findAll(){
+        List<Cliente> clienteList = this.clienteRepository.findAll();
+        List<ClienteDTO> clienteDTOS = new ArrayList<>();
+        for (Cliente c: clienteList) {
+            var cliente = copyToDto(c);
+            clienteDTOS.add(cliente);
+        }
+        return clienteDTOS;
     }
 
-    @Transactional
-    public Cliente insert(ClienteDTO clienteDTO){
-        var usuario = usuarioRepository.findById(clienteDTO.getUsuarioId()).orElseThrow(null);
-        var endereco = enderecoRepository.findById(clienteDTO.getUsuarioId()).orElseThrow(null);
+
+    public ClienteDTO insert(ClienteDTO clienteDTO){
+        Usuario usuario = this.usuarioRepository.findById(clienteDTO.getUsuarioId())
+                .orElseThrow(()-> new RuntimeException("Usuario não encontrado!"));
+
+        Endereco endereco = this.enderecoRepository.findById(clienteDTO.getEnderecoId())
+                .orElseThrow(()-> new RuntimeException("Endereco não encontrado!"));
+
 
         Cliente cliente = new Cliente(usuario,endereco,clienteDTO.getNome());
         this.clienteRepository.save(cliente);
-        return  cliente;
+        ClienteDTO clienteDTO1 = copyToDto(cliente);
+        return clienteDTO1;
     }
 
-//    @Transactional
-//    public ClienteDTO update(Long id,ClienteDTO clienteDTO){
-//        try{
-//            var usuario = usuarioRepository.findById(clienteDTO.getUsuarioDTO().getId()).orElseThrow(null);
-//            var endereco = enderecoRepository.findById(clienteDTO.getEnderecoDTO().getId()).orElseThrow(null);
-//            Cliente cliente = clienteRepository.getReferenceById(id);
-//            copyDtoToEntity(clienteDTO,usuario,endereco);
-//            cliente = clienteRepository.save(cliente);
-//            return new ClienteDTO(cliente);
-//        }catch (EntityNotFoundException e){
-//            throw new ResourceNotFoundException("Erro , Cliente não encontrado!");
-//        }
-//    }
+    @jakarta.transaction.Transactional
+    public ClienteDTO update(Cliente cliente){
+        Cliente cliente1 = this.clienteRepository.findById(cliente.getId())
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
 
 
-//    private Cliente copyDtoToEntity(ClienteDTO clienteDTO) {
-//        Cliente cliente = new Cliente();
-//        cliente.setNome(clienteDTO.getNome());
-//
-//        cliente.setId(clienteDTO.getId());
-//
-//    }
+        cliente1.setId(cliente.getId());
+        cliente1.setNome(cliente.getNome());
+        cliente1.setUsuario(cliente.getUsuario());
+        cliente1.setEndereco(cliente.getEndereco());
+        cliente1.setPedidoList(cliente.getPedidoList());
+
+
+        this.clienteRepository.save(cliente1);
+        ClienteDTO clienteDTO = copyToDto(cliente1);
+        return clienteDTO;
+    }
+
+    @Transactional
+    public String LogicDelete(Long id){
+        Cliente cliente = this.clienteRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        cliente.setAtivo(false);
+        this.clienteRepository.save(cliente);
+        return "Cliente desativado com sucesso!";
+    }
+
+
+    private ClienteDTO copyToDto(Cliente cliente) {
+        ClienteDTO clienteDTO = new ClienteDTO(cliente);
+        return clienteDTO;
+    }
 }

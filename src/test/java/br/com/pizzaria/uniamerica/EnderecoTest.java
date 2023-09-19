@@ -4,7 +4,7 @@ import br.com.pizzaria.uniamerica.controller.EnderecoController;
 import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
 import br.com.pizzaria.uniamerica.entities.Endereco;
 import br.com.pizzaria.uniamerica.repository.EnderecoRepository;
-import br.com.pizzaria.uniamerica.service.EnderecoService;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

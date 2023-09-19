@@ -7,7 +7,7 @@ import br.com.pizzaria.uniamerica.entities.Sabor;
 import br.com.pizzaria.uniamerica.entities.TamanhoPizza;
 import br.com.pizzaria.uniamerica.repository.PizzaRepository;
 import br.com.pizzaria.uniamerica.repository.SaborRepository;
-import br.com.pizzaria.uniamerica.service.PizzaService;
+
 import org.junit.Assert;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

@@ -1,6 +1,6 @@
 package br.com.pizzaria.uniamerica.service;
 
-import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
+
 import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
 import br.com.pizzaria.uniamerica.entities.*;
 import br.com.pizzaria.uniamerica.repository.ClienteRepository;

@@ -1,11 +1,7 @@
 package br.com.pizzaria.uniamerica.dto.pedidoDTOs;
 
 
-import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
-import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
-import br.com.pizzaria.uniamerica.dto.pizzaDTOs.PizzaDTO;
-import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDTO;
-import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
+
 import br.com.pizzaria.uniamerica.entities.*;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
