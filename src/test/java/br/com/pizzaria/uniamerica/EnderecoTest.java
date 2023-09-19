@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-public class EnderecoTest {
+class EnderecoTest {
 
     @MockBean
     private EnderecoRepository enderecoRepository;

@@ -19,8 +19,8 @@ public class SaborService {
     public SaborDTO findById(Long id){
         Sabor sabor = this.saborRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Id não encontrado"));
-        SaborDTO dto = copyEntityToDto(sabor);
-        return dto;
+        SaborDTO saborDTO = copyEntityToDto(sabor);
+        return saborDTO;
     }
 
     public List<SaborDTO> findAll(){

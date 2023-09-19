@@ -2,17 +2,14 @@ package br.com.pizzaria.uniamerica.controller;
 
 
 import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
-import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 import br.com.pizzaria.uniamerica.entities.Cliente;
-import br.com.pizzaria.uniamerica.entities.Pedido;
 import br.com.pizzaria.uniamerica.service.ClienteService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
-import java.net.URI;
+
 
 @RestController
 @RequestMapping(value = "api/clientes")

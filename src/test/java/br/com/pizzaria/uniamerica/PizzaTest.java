@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 @SpringBootTest
-public class PizzaTest {
+class PizzaTest {
     @MockBean
     private PizzaRepository pizzaRepository;
     @MockBean

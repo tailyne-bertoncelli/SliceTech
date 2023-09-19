@@ -3,7 +3,7 @@ package br.com.pizzaria.uniamerica.controller;
 import br.com.pizzaria.uniamerica.dto.estoqueProdutoDTOs.EstoqueProdutoDTO;
 import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
 import br.com.pizzaria.uniamerica.service.EstoqueProdutoService;
-import jakarta.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
