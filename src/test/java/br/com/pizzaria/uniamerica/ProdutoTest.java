@@ -1,7 +1,6 @@
 package br.com.pizzaria.uniamerica;
 
 
-
 import br.com.pizzaria.uniamerica.controller.ProdutoController;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDTO;
 import br.com.pizzaria.uniamerica.dto.produtoDTOs.ProdutoDetalhesDTO;
@@ -48,30 +47,16 @@ class ProdutoTest {
         produtoList.add(new Produto(estoqueProduto, 1));
         produtoList.add(new Produto(estoqueProduto, 3));
 
-        Mockito.when(this.produtoRepository.save(produto)).thenReturn(produto);
-        Mockito.when(this.produtoRepository.findAll()).thenReturn(produtoList);
-        Mockito.when(this.produtoRepository.findById(1L)).thenReturn(Optional.of(produto));
+        Mockito.when(produtoRepository.save(produto)).thenReturn(produto);
+        Mockito.when(produtoRepository.findAll()).thenReturn(produtoList);
+        Mockito.when(produtoRepository.findById(1L)).thenReturn(Optional.of(produto));
     }
 
-//    @Test
-//    public void findById(){
-//        EstoqueProduto estoqueProduto = new EstoqueProduto("Coca cola 1L", 9.99, 10);
-//        estoqueProduto.setId(1L);
-//
-//        Produto produto = new Produto(estoqueProduto, 2);
-//        produto.setId(1L);
-//
-//        var teste = this.produtoService.findById(1L);
-//
-//        ProdutoDTO produtoDTO = new ProdutoDTO();
-//        produtoDTO.setId(teste.getId());
-//        produtoDTO.setQuantidade(teste.getQuantidade());
-//        produtoDTO.setEstoqueProduto_id(teste.getEstoqueProduto_id());
-//
-//        var recebe = 1L;
-//
-//        Assert.assertEquals(recebe, produtoDTO.getId().longValue());
-//    }
+    @Test
+    void findById(){
+        var teste = produtoController.buscaPeloId(1L);
+        Assert.assertEquals(1L, teste.getBody().getId(), 0);
+    }
 
     @Test
     void findAll(){
@@ -81,12 +66,6 @@ class ProdutoTest {
 
 //    @Test
 //    void cadastra(){
-//        EstoqueProduto estoqueProduto = new EstoqueProduto("Coca cola 1L", 9.99, 10);
-//        estoqueProduto.setId(1L);
-//
-//        Produto produto = new Produto(estoqueProduto, 2);
-//        produto.setId(1L);
-//
 //        ProdutoDTO produtoDTO = new ProdutoDTO();
 //        produtoDTO.setId(1L);
 //        produtoDTO.setEstoqueProduto_id(1L);
@@ -99,7 +78,7 @@ class ProdutoTest {
 //        produtoDTO1.setEstoqueProduto_id(teste.getBody().getEstoqueProduto_id());
 //        produtoDTO1.setQuantidade(teste.getBody().getQuantidade());
 //
-//        Assert.assertEquals(produtoDTO1, teste.getBody());
+//        Assert.assertEquals(produtoDTO.getEstoqueProduto_id(), produtoDTO1.getEstoqueProduto_id());
 //    }
 
     @Test

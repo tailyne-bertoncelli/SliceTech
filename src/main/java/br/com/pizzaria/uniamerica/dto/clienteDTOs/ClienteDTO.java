@@ -16,6 +16,8 @@ import java.util.List;
 
 @NoArgsConstructor
 public class ClienteDTO {
+    @Getter @Setter
+    private Long id;
 
     @Getter
     @Setter
@@ -44,4 +46,9 @@ public class ClienteDTO {
         enderecoId = entity.getEndereco().getId();
     }
 
+    public ClienteDTO(String nome, Long usuarioId, Long enderecoId) {
+        this.nome = nome;
+        this.usuarioId = usuarioId;
+        this.enderecoId = enderecoId;
+    }
 }

@@ -5,7 +5,6 @@ import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 import br.com.pizzaria.uniamerica.entities.Usuario;
 import br.com.pizzaria.uniamerica.service.UsuarioService;
 
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.net.URI;
 import java.util.List;
 
 @RestController
@@ -35,7 +33,7 @@ public class UsuarioController {
     }
 
     @GetMapping("/findAll")
-    public ResponseEntity<List<UsuarioDTO>> FindAll(){
+    public ResponseEntity<List<UsuarioDTO>> findAll(){
         try {
             return ResponseEntity.ok(this.usuarioService.findAll());
         } catch (Exception e){
@@ -44,7 +42,7 @@ public class UsuarioController {
     }
 
     @PostMapping
-    public ResponseEntity<UsuarioDTO> Insert(@RequestBody @Validated UsuarioDTO usuarioDTO){
+    public ResponseEntity<UsuarioDTO> insert(@RequestBody @Validated UsuarioDTO usuarioDTO){
         try {
             return ResponseEntity.ok(this.usuarioService.cadastrar(usuarioDTO));
         } catch (Exception e){
@@ -53,7 +51,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/update")
-    public ResponseEntity<UsuarioDTO> Update(@RequestBody @Validated Usuario usuario){
+    public ResponseEntity<UsuarioDTO> update(@RequestBody @Validated Usuario usuario){
         try {
             return ResponseEntity.ok(this.usuarioService.alterar(usuario));
         } catch (Exception e){
@@ -62,7 +60,7 @@ public class UsuarioController {
     }
 
     @PutMapping("/LogicDelete")
-    public ResponseEntity<String> LogicDelete(@RequestParam Long id){
+    public ResponseEntity<String> logicDelete(@RequestParam Long id){
         try {
             return ResponseEntity.ok(this.usuarioService.desativar(id));
         } catch (Exception e){

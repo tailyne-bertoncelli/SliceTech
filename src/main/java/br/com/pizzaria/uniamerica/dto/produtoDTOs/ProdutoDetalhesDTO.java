@@ -1,7 +1,6 @@
 package br.com.pizzaria.uniamerica.dto.produtoDTOs;
 
 import br.com.pizzaria.uniamerica.dto.estoqueProdutoDTOs.EstoqueProdutoDTO;
-import br.com.pizzaria.uniamerica.entities.EstoqueProduto;
 import lombok.Getter;
 import lombok.Setter;
 

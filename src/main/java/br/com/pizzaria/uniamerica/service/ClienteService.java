@@ -28,8 +28,7 @@ public class ClienteService {
     public ClienteDTO findById(Long id){
         Cliente cliente = this.clienteRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-        ClienteDTO clienteDTO = copyToDto(cliente);
-        return clienteDTO;
+        return copyToDto(cliente);
     }
 
 
@@ -54,14 +53,13 @@ public class ClienteService {
 
         Cliente cliente = new Cliente(usuario,endereco,clienteDTO.getNome());
         this.clienteRepository.save(cliente);
-        ClienteDTO clienteDTO1 = copyToDto(cliente);
-        return clienteDTO1;
+        return copyToDto(cliente);
     }
 
     @Transactional
     public ClienteDTO update(Cliente cliente){
         Cliente cliente1 = this.clienteRepository.findById(cliente.getId())
-                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+                .orElseThrow(()-> new RuntimeException("Cliente informado não foi encontrado!"));
 
 
         cliente1.setId(cliente.getId());
@@ -72,14 +70,13 @@ public class ClienteService {
 
 
         this.clienteRepository.save(cliente1);
-        ClienteDTO clienteDTO = copyToDto(cliente1);
-        return clienteDTO;
+        return copyToDto(cliente1);
     }
 
     @Transactional
-    public String LogicDelete(Long id){
+    public String logicDelete(Long id){
         Cliente cliente = this.clienteRepository.findById(id)
-                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+                .orElseThrow(()-> new RuntimeException("O ID do cliente informado não foi encontrado!"));
         cliente.setAtivo(false);
         this.clienteRepository.save(cliente);
         return "Cliente desativado com sucesso!";
@@ -87,7 +84,6 @@ public class ClienteService {
 
 
     private ClienteDTO copyToDto(Cliente cliente) {
-        ClienteDTO clienteDTO = new ClienteDTO(cliente);
-        return clienteDTO;
+        return new ClienteDTO(cliente);
     }
 }

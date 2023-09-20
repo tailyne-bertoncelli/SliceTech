@@ -54,7 +54,7 @@ class UsuarioTest {
     void testeInsert(){
         UsuarioDTO usuarioDTO = new UsuarioDTO(1L,"login123","senha123","email123@gmail.com","CLIENTE");
 
-        var usuarioControllerVarEscopada = usuarioController.Insert(usuarioDTO);
+        var usuarioControllerVarEscopada = usuarioController.insert(usuarioDTO);
 
         UsuarioDTO usuarioDTOCallback = new UsuarioDTO(usuarioControllerVarEscopada.getBody().getId(), usuarioControllerVarEscopada.getBody().getLogin(),usuarioControllerVarEscopada.getBody().getSenha(),usuarioControllerVarEscopada.getBody().getEmail(),usuarioControllerVarEscopada.getBody().getCargo());
 
@@ -63,24 +63,30 @@ class UsuarioTest {
 
     @Test
     void findAll(){
-        var usuarioControllerVarEscopada = usuarioController.FindAll();
+        var usuarioControllerVarEscopada = usuarioController.findAll();
 
         Assert.assertEquals(3,usuarioControllerVarEscopada.getBody().size());
     }
 
-    @Test
-    void testUpdate(){
-
-    }
 
     @Test
     void testDisabled(){
-        var usuarioControllerVarEscopada = usuarioController.LogicDelete(1L);
+        var usuarioControllerVarEscopada = usuarioController.logicDelete(1L);
 
         Assert.assertEquals("Usuario desativado!", usuarioControllerVarEscopada.getBody());
     }
 
+    @Test
+    void testUpdate(){
+        Usuario usuario = new Usuario("login123","senha123","email123@gmail.com","CLIENTE");
+        usuario.setId(1L);
 
+
+        var variavelVarScopada = usuarioController.update(usuario);
+        UsuarioDTO usuarioDTO = new UsuarioDTO(usuario);
+
+        Assert.assertEquals(usuarioDTO.getId(), variavelVarScopada.getBody().getId());
+    }
 
 
 

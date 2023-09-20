@@ -24,8 +24,7 @@ public class ProdutoService {
     public ProdutoDTO findById(Long id){
         Produto produto = this.produtoRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
-        var dto = copyToDto(produto);
-        return dto;
+        return copyToDto(produto);
     }
 
     public List<ProdutoDTO> findAll(){
@@ -51,8 +50,7 @@ public class ProdutoService {
 
         var prodSalvo = this.produtoRepository.save(produto);
         baixaEstoque(estoqueProduto, produto);
-        ProdutoDTO dto = copyToDto(prodSalvo);
-        return dto;
+        return copyToDto(prodSalvo);
     }
 
     @Transactional
@@ -94,14 +92,14 @@ public class ProdutoService {
     public double calculaTotalProduto(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
         double valorUn = estoqueProduto.getValorUnidade();
         int qntComprada = produtoDTO.getQuantidade();
-        double total = valorUn * qntComprada;
-        return total;
+        return valorUn * qntComprada;
     }
 
     private ProdutoDTO copyToDto(Produto produto) {
         ProdutoDTO produtoDTO = new ProdutoDTO();
+        produtoDTO.setId(produto.getId());
         produtoDTO.setQuantidade(produto.getQuantidade());
-        produtoDTO.setEstoqueProduto_id(produto.getId());
+        produtoDTO.setEstoqueProduto_id(produto.getProduto().getId());
         return produtoDTO;
     }
 }

@@ -4,7 +4,6 @@ package br.com.pizzaria.uniamerica.controller;
 import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
 import br.com.pizzaria.uniamerica.entities.Cliente;
 import br.com.pizzaria.uniamerica.service.ClienteService;
-import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +60,7 @@ public class ClienteController {
     @PutMapping("/logicDelete")
     public ResponseEntity<String> deleteLogic(@RequestParam Long id){
         try {
-            return ResponseEntity.ok(this.clienteService.LogicDelete(id));
+            return ResponseEntity.ok(this.clienteService.logicDelete(id));
         } catch (Exception e){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage());
         }

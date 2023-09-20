@@ -1,6 +1,5 @@
 package br.com.pizzaria.uniamerica.entities;
 
-import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
