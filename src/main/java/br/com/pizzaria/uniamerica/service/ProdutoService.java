@@ -76,7 +76,7 @@ public class ProdutoService {
         return "Produto destivado com sucesso!";
     }
 
-    private void verificaEstoque(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
+    public void verificaEstoque(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
         if (estoqueProduto.getEstoque() == 0){
             throw new RuntimeException("Produto esgotado!");
         }
@@ -85,20 +85,20 @@ public class ProdutoService {
         }
     }
 
-    private void baixaEstoque(EstoqueProduto estoqueProduto, Produto produto) {
+    public void baixaEstoque(EstoqueProduto estoqueProduto, Produto produto) {
         int estoque = estoqueProduto.getEstoque();
         int estoqueAtualizado = estoque - produto.getQuantidade();
         estoqueProduto.setEstoque(estoqueAtualizado);
     }
 
-    private double calculaTotalProduto(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
+    public double calculaTotalProduto(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
         double valorUn = estoqueProduto.getValorUnidade();
         int qntComprada = produtoDTO.getQuantidade();
         double total = valorUn * qntComprada;
         return total;
     }
 
-    private ProdutoDTO copyToDto(Produto produto) {
+    public ProdutoDTO copyToDto(Produto produto) {
         ProdutoDTO produtoDTO = new ProdutoDTO();
         produtoDTO.setQuantidade(produto.getQuantidade());
         produtoDTO.setEstoqueProduto_id(produto.getId());
