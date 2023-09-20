@@ -44,7 +44,11 @@ public class UsuarioDTO {
 
     }
 
-
-
-
+    public UsuarioDTO(Long id, String login, String senha, String email, String cargo) {
+        this.id = id;
+        this.login = login;
+        this.senha = senha;
+        this.email = email;
+        this.cargo = cargo;
+    }
 }
