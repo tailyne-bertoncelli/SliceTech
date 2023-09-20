@@ -13,6 +13,8 @@ import lombok.Setter;
  * Author : Cristovao Martins
  */
 @Entity
+@Getter
+@Setter
 @Table(name = "tb_pedidos",schema = "public")
 @NoArgsConstructor
 public class Pedido extends AbstractEntity{
@@ -29,7 +31,7 @@ public class Pedido extends AbstractEntity{
     @Getter
     @Setter
     @Column(name = "sabor")
-    private String sabor;
+    private Sabor sabor;
     @Getter
     @Setter
     @Column(name = "descricao")
@@ -59,7 +61,7 @@ public class Pedido extends AbstractEntity{
 //    @JsonIgnore
 //    private List<Produto> produtosList = new ArrayList<>();
 
-    public Pedido(Cliente cliente, Pizza pizza, String formaPagamentoId, String sabor, String descricao, double valor, boolean entrega, boolean situacao) {
+    public Pedido(Cliente cliente, Pizza pizza, String formaPagamentoId, Sabor sabor, String descricao, double valor, boolean entrega, boolean situacao) {
         this.cliente = cliente;
         this.pizza = pizza;
         this.formaDePagamento = FormaDePagamento.valueOf(formaPagamentoId);
@@ -71,4 +73,20 @@ public class Pedido extends AbstractEntity{
     }
 
 
+    public Pedido(FormaDePagamento formaDePagamento, Pizza pizza, Sabor sabor, String descricao, double valor, boolean entrega, boolean situacao, Cliente cliente) {
+        this.formaDePagamento = formaDePagamento;
+        this.pizza = pizza;
+        this.sabor = sabor;
+        this.descricao = descricao;
+        this.valor = valor;
+        this.entrega = entrega;
+        this.situacao = situacao;
+        this.cliente = cliente;
+    }
+
+    public Pedido(Long clientId, String sabor, String descricao, double valor) {
+    }
+
+    public Pedido(String dinheiro, Pizza pizza, Sabor sabor, String asdfasdf, double v, boolean b, boolean b1, Cliente cliente) {
+    }
 }

@@ -24,7 +24,7 @@ public class PedidoDTO {
     @Getter
     @Setter
     @NotNull
-    private String sabor;
+    private String saborId;
     @Getter
     @Setter
     private String descricao;
@@ -45,25 +45,15 @@ public class PedidoDTO {
     @NotNull
     private Long clientId;
 
-
-    public PedidoDTO(String formaPagamentoId, Long pizzaId, String sabor, String descricao, double valor, boolean entrega, boolean situacao, Long clientId) {
-        this.formaPagamentoId = formaPagamentoId;
-        this.pizzaId = pizzaId;
-        this.sabor = sabor;
-        this.descricao = descricao;
-        this.valor = valor;
-        this.entrega = entrega;
-        this.situacao = situacao;
-        this.clientId = clientId;
-    }
-
     public PedidoDTO(Pedido entity) {
        pizzaId = entity.getPizza().getId();
        clientId = entity.getCliente().getId();
-       sabor = entity.getSabor();
+       saborId = String.valueOf(entity.getSabor().getId());
        descricao = entity.getDescricao();
        valor = entity.getValor();
        entrega = entity.isEntrega();
        situacao = entity.isSituacao();
     }
+
+
 }
