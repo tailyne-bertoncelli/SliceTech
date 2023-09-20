@@ -2,6 +2,7 @@ package br.com.pizzaria.uniamerica.service;
 
 
 import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
+import br.com.pizzaria.uniamerica.dto.pizzaDTOs.PizzaDTO;
 import br.com.pizzaria.uniamerica.entities.*;
 import br.com.pizzaria.uniamerica.repository.ClienteRepository;
 import br.com.pizzaria.uniamerica.repository.PedidosRepository;
@@ -9,10 +10,11 @@ import br.com.pizzaria.uniamerica.repository.PizzaRepository;
 import br.com.pizzaria.uniamerica.service.exception.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
 
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -26,61 +28,64 @@ public class PedidoService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @Transactional(readOnly = true)
-    public Pedido findById(Long id){
-        Pedido pedido = pedidosRepository.findById(id).orElseThrow( () -> new RuntimeException("Recurso não encontrado!"));
-        return  pedido;
+    public PedidoDTO findById(Long id){
+        Pedido pedido = this.pedidosRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        PedidoDTO pedidoDTO = copyToDto(pedido);
+        return pedidoDTO;
     }
 
-    @Transactional(readOnly = true)
-    public List<Pedido> findAll(){
-        return pedidosRepository.findAll();
-    }
 
-    @Transactional
-    public Pedido insert(PedidoDTO pedidoDTO){
-        var pizza = pizzaRepository.findById(pedidoDTO.getPizzaId()).orElseThrow(null);
-        var cliente = clienteRepository.findById(pedidoDTO.getClientId()).orElseThrow(null);
-
-        Pedido pedido = new Pedido(cliente,pizza,pedidoDTO.getFormaPagamentoId(),pedidoDTO.getSabor(),pedidoDTO.getDescricao(),pedidoDTO.getValor(),pedidoDTO.isEntrega(),pedidoDTO.isSituacao());
-        this.pedidosRepository.save(pedido);
-        return  pedido;
-    }
-
-    @Transactional
-    public PedidoDTO update(Long id,PedidoDTO pedidoDTO){
-        try {
-            Pedido pedido = pedidosRepository.getReferenceById(id);
-//            copyDtoToEntity(pedidoDTO, pedido);
-            pedido = pedidosRepository.save(pedido);
-            return new PedidoDTO(pedido);
-        } catch (EntityNotFoundException e) {
-            throw new ResourceNotFoundException("Recurso não encontrado!");
+    public List<PedidoDTO> findAll(){
+        List<Pedido> pedidoList = this.pedidosRepository.findAll();
+        List<PedidoDTO> pedidoDTOS1 = new ArrayList<>();
+        for (Pedido p: pedidoList) {
+            var pizza = copyToDto(p);
+            pedidoDTOS1.add(pizza);
         }
+        return pedidoDTOS1;
     }
 
     @Transactional
-    public void statusCancelado(Long id){
-        this.pedidosRepository.statusCancelado(id);
+    public PedidoDTO insert(PedidoDTO pedidoDTO){
+
+        Pedido pedido = new Pedido(pedidoDTO.getClientId(),pedidoDTO.getSaborId(),pedidoDTO.getDescricao(),pedidoDTO.getValor());
+        this.pedidosRepository.save(pedido);
+        PedidoDTO pedidoDTO1 = copyToDto(pedido);
+        return pedidoDTO1;
     }
 
-    private Pedido copyDtoToEntity(PedidoDTO pedidoDTO, Pizza pizza) {
-        Pedido pedido = new Pedido();
-        Cliente cliente = new Cliente();
+    @jakarta.transaction.Transactional
+    public PedidoDTO update(Pedido pedido){
+        Pedido pedido1 = this.pedidosRepository.findById(pedido.getId()).orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
 
-        pedido.setSabor(pedidoDTO.getSabor());
-        pedido.setDescricao(pedidoDTO.getDescricao());
-        pedido.setValor(pedidoDTO.getValor());
-        pedido.setEntrega(pedidoDTO.isEntrega());
-        pedido.setSituacao(pedidoDTO.isSituacao());
-        pedido.setCliente(cliente);
-        pedido.setPizza(pizza);
+        pedido1.setSabor(pedido.getSabor());
+        pedido1.setDescricao(pedido.getDescricao());
+        pedido1.setValor(pedido.getValor());
+        pedido1.setCliente(pedido.getCliente());
+        pedido1.setPizza(pedido.getPizza());
+        pedido1.setEntrega(pedido.isEntrega());
+        pedido1.setSituacao(pedido.isSituacao());
+        pedido1.setFormaDePagamento(pedido.getFormaDePagamento());
 
-        return pedido;
+
+        this.pedidosRepository.save(pedido1);
+        PedidoDTO pedidoDTO = copyToDto(pedido1);
+        return pedidoDTO;
     }
 
     @Transactional
-    public void statusSituacao(Long id){
-        this.pedidosRepository.statusEncerrado(id);
+    public String logicDelete(Long id){
+        Pedido pedido = this.pedidosRepository.findById(id)
+                .orElseThrow(()-> new RuntimeException("O ID informado não foi encontrado!"));
+        pedido.setAtivo(false);
+        this.pedidosRepository.save(pedido);
+        return "O Pedido foi desativado!";
+    }
+
+
+    private PedidoDTO copyToDto(Pedido pedido) {
+        PedidoDTO pedidoDTO = new PedidoDTO(pedido);
+        return pedidoDTO;
     }
 }

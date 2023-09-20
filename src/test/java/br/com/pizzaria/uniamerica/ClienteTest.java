@@ -1,8 +1,6 @@
 package br.com.pizzaria.uniamerica;
 
 import br.com.pizzaria.uniamerica.controller.ClienteController;
-import br.com.pizzaria.uniamerica.dto.clienteDTOs.ClienteDTO;
-import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 import br.com.pizzaria.uniamerica.entities.Cliente;
 import br.com.pizzaria.uniamerica.entities.Endereco;
 
@@ -71,5 +69,48 @@ class ClienteTest {
         var clienteControllerVarEscopada = clienteController.deleteLogic(1L);
 
         Assert.assertEquals("Cliente desativado com sucesso!", clienteControllerVarEscopada.getBody());
+    }
+
+    @Test
+    void testGetSetUsuario() {
+        Usuario usuario = new Usuario();
+        cliente.setUsuario(usuario);
+
+        assertEquals(usuario, cliente.getUsuario());
+    }
+
+    @Test
+    void testGetSetEndereco() {
+        Endereco endereco = new Endereco();
+        cliente.setEndereco(endereco);
+
+        assertEquals(endereco, cliente.getEndereco());
+    }
+
+    @Test
+    void testGetSetNome() {
+        cliente.setNome("João da Silva");
+
+        assertEquals("João da Silva", cliente.getNome());
+    }
+
+    @Test
+    void testGetSetPedidoList() {
+        Pedido pedido1 = new Pedido();
+        Pedido pedido2 = new Pedido();
+
+        cliente.adicionarPedido(pedido1);
+        cliente.adicionarPedido(pedido2);
+
+        assertEquals(2, cliente.getPedidoList().size());
+        assertTrue(cliente.getPedidoList().contains(pedido1));
+        assertTrue(cliente.getPedidoList().contains(pedido2));
+    }
+
+    private void initCliente() {
+        cliente = new Cliente();
+        cliente.setUsuario(new Usuario());
+        cliente.setEndereco(new Endereco());
+        cliente.setNome("João da Silva");
     }
 }
