@@ -91,7 +91,7 @@ public class ProdutoService {
         estoqueProduto.setEstoque(estoqueAtualizado);
     }
 
-    private double calculaTotalProduto(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
+    public double calculaTotalProduto(EstoqueProduto estoqueProduto, ProdutoDTO produtoDTO) {
         double valorUn = estoqueProduto.getValorUnidade();
         int qntComprada = produtoDTO.getQuantidade();
         double total = valorUn * qntComprada;
