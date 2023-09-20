@@ -69,11 +69,7 @@ class SaborTest {
 
         var teste = saborController.altera(sabor);
 
-        SaborDTO saborRetorno = new SaborDTO();
-        sabor.setNome(teste.getBody().getNome());
-        sabor.setId(teste.getBody().getId());
-
-        Assert.assertEquals(sabor.getId(), saborRetorno.getId());
+        Assert.assertEquals(sabor.getNome(), teste.getBody().getNome());
     }
 
     @Test

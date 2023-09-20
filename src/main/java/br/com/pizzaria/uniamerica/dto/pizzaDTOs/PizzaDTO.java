@@ -5,7 +5,6 @@ import br.com.pizzaria.uniamerica.entities.TamanhoPizza;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.DecimalMin;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,7 +16,7 @@ public class PizzaDTO {
     @Getter @Setter
     private Long id;
     @Getter @Setter
-    @NotBlank(message = "O sabor não pode ser null ou vazio!")
+
     private Long sabor;
     @Getter @Setter
     private String descricao;

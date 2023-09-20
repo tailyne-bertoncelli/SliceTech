@@ -1,11 +1,8 @@
 package br.com.pizzaria.uniamerica.dto.clienteDTOs;
 
 
-import br.com.pizzaria.uniamerica.dto.enderecoDTOs.EnderecoDTO;
 import br.com.pizzaria.uniamerica.dto.pedidoDTOs.PedidoDTO;
-import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 import br.com.pizzaria.uniamerica.entities.*;
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,6 +38,7 @@ public class ClienteDTO {
     }
 
     public ClienteDTO(Cliente entity) {
+        id = entity.getId();
         nome = entity.getNome();
         usuarioId = entity.getUsuario().getId();
         enderecoId = entity.getEndereco().getId();

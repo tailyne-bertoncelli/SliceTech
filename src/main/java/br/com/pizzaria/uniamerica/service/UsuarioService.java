@@ -3,8 +3,6 @@ package br.com.pizzaria.uniamerica.service;
 import br.com.pizzaria.uniamerica.dto.usuarioDTOs.UsuarioDTO;
 import br.com.pizzaria.uniamerica.entities.Usuario;
 import br.com.pizzaria.uniamerica.repository.UsuarioRepository;
-import br.com.pizzaria.uniamerica.service.exception.ResourceNotFoundException;
-import jakarta.persistence.EntityNotFoundException;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

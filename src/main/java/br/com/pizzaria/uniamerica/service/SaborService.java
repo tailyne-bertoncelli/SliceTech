@@ -4,7 +4,6 @@ import br.com.pizzaria.uniamerica.dto.saborDTOs.SaborDTO;
 import br.com.pizzaria.uniamerica.entities.Sabor;
 import br.com.pizzaria.uniamerica.repository.SaborRepository;
 import jakarta.transaction.Transactional;
-import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,8 +18,7 @@ public class SaborService {
     public SaborDTO findById(Long id){
         Sabor sabor = this.saborRepository.findById(id)
                 .orElseThrow(()-> new RuntimeException("Id não encontrado"));
-        SaborDTO saborDTO = copyEntityToDto(sabor);
-        return saborDTO;
+        return copyEntityToDto(sabor);
     }
 
     public List<SaborDTO> findAll(){
@@ -41,16 +39,14 @@ public class SaborService {
         saborAlterado.setNome(sabor.getNome());
 
         this.saborRepository.save(saborAlterado);
-        SaborDTO dto = copyEntityToDto(saborAlterado);
-        return dto;
+        return copyEntityToDto(saborAlterado);
     }
 
     @Transactional
     public SaborDTO cadastra(SaborDTO saborDTO){
         Sabor sabor = new Sabor(saborDTO);
         this.saborRepository.save(sabor);
-        SaborDTO dto = copyEntityToDto(sabor);
-        return dto;
+        return copyEntityToDto(sabor);
     }
 
 
@@ -65,6 +61,7 @@ public class SaborService {
 
     private SaborDTO copyEntityToDto(Sabor sabor) {
         SaborDTO saborDTO = new SaborDTO();
+        saborDTO.setId(sabor.getId());
         saborDTO.setNome(sabor.getNome());
         return saborDTO;
     }
