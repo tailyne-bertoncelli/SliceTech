@@ -26,10 +26,7 @@ public class Pedido extends AbstractEntity{
     @JsonBackReference
     @JoinColumn(name = "pizza_id")
     private Pizza pizza;
-    @Getter
-    @Setter
-    @Column(name = "sabor")
-    private String sabor;
+
     @Getter
     @Setter
     @Column(name = "descricao")
@@ -52,18 +49,12 @@ public class Pedido extends AbstractEntity{
     @JsonBackReference
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
-//    @Getter
-//    @Setter
-//    @OneToMany
-//    @JsonManagedReference
-//    @JsonIgnore
-//    private List<Produto> produtosList = new ArrayList<>();
 
-    public Pedido(Cliente cliente, Pizza pizza, String formaPagamentoId, String sabor, String descricao, double valor, boolean entrega, boolean situacao) {
+
+    public Pedido(Cliente cliente, Pizza pizza, String formaPagamentoId, String descricao, double valor, boolean entrega, boolean situacao) {
         this.cliente = cliente;
         this.pizza = pizza;
         this.formaDePagamento = FormaDePagamento.valueOf(formaPagamentoId);
-        this.sabor = sabor;
         this.descricao = descricao;
         this.valor = valor;
         this.entrega = entrega;

@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/pizza")
+@CrossOrigin(origins = "http://localhost:4200")
 public class PizzaController {
     @Autowired
     private PizzaService pizzaService;

@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("api/relatorio")
+@CrossOrigin(origins = "http://localhost:4200")
 public class GerenciaController {
     @Autowired
     private GerenciaService gerenciaService;

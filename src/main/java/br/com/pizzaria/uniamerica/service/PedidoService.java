@@ -42,7 +42,7 @@ public class PedidoService {
         var pizza = pizzaRepository.findById(pedidoDTO.getPizzaId()).orElseThrow(null);
         var cliente = clienteRepository.findById(pedidoDTO.getClientId()).orElseThrow(null);
 
-        Pedido pedido = new Pedido(cliente,pizza,pedidoDTO.getFormaPagamentoId(),pedidoDTO.getSabor(),pedidoDTO.getDescricao(),pedidoDTO.getValor(),pedidoDTO.isEntrega(),pedidoDTO.isSituacao());
+        Pedido pedido = new Pedido(cliente,pizza,pedidoDTO.getFormaPagamentoId(),pedidoDTO.getDescricao(),pedidoDTO.getValor(),pedidoDTO.isEntrega(),pedidoDTO.isSituacao());
         this.pedidosRepository.save(pedido);
         return  pedido;
     }
@@ -68,7 +68,6 @@ public class PedidoService {
         Pedido pedido = new Pedido();
         Cliente cliente = new Cliente();
 
-        pedido.setSabor(pedidoDTO.getSabor());
         pedido.setDescricao(pedidoDTO.getDescricao());
         pedido.setValor(pedidoDTO.getValor());
         pedido.setEntrega(pedidoDTO.isEntrega());
