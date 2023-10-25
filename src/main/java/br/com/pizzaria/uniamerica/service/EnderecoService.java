@@ -30,8 +30,10 @@ public class EnderecoService {
         List<Endereco> enderecoList = this.enderecoRepository.findAll();
         List<EnderecoDTO> enderecoDTOList = new ArrayList<>();
         for (Endereco e: enderecoList) {
-            var end = copyToDto(e);
-            enderecoDTOList.add(end);
+            if (e.isAtivo()) {
+                var end = copyToDto(e);
+                enderecoDTOList.add(end);
+            }
         }
         return enderecoDTOList;
     }

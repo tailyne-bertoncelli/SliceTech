@@ -35,16 +35,46 @@ public class Cliente extends AbstractEntity{
     @Setter
     @Column(name = "nome")
     private String nome;
+
+    @Getter
+    @Setter
+    @Column(name = "idade")
+    private int idade;
+
+    @Getter
+    @Setter
+    @Column(name = "telefone")
+    private String telefone;
+
+    @Getter
+    @Setter
+    @Column(name = "genero")
+    private String genero;
+
+    @Getter
+    @Setter
+    @Column(name = "data_nascimento")
+    private String data_nascimento;
+
     @OneToMany(mappedBy = "cliente")
     @Getter
     @Setter
     @JsonManagedReference
     private List<Pedido> pedidoList = new ArrayList<>();
 
-    public Cliente(Usuario usuario, Endereco endereco, String nome) {
+//    public Cliente(Usuario usuario, Endereco endereco, String nome) {
+//        this.usuario = usuario;
+//        this.endereco = endereco;
+//        this.nome = nome;
+//    }
+
+    public Cliente(Usuario usuario, Endereco endereco, String nome, int idade, String telefone, String genero, String data_nascimento) {
         this.usuario = usuario;
         this.endereco = endereco;
         this.nome = nome;
+        this.idade = idade;
+        this.telefone = telefone;
+        this.genero = genero;
+        this.data_nascimento = data_nascimento;
     }
-
 }

@@ -25,8 +25,10 @@ public class SaborService {
         List<Sabor> list = this.saborRepository.findAll();
         List<SaborDTO> saborDTOList = new ArrayList<>();
         for (Sabor sabor: list) {
-            var transformaEmDTO = copyEntityToDto(sabor);
-            saborDTOList.add(transformaEmDTO);
+            if (sabor.isAtivo()){
+                var transformaEmDTO = copyEntityToDto(sabor);
+                saborDTOList.add(transformaEmDTO);
+            }
         }
         return saborDTOList;
     }

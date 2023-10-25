@@ -26,7 +26,7 @@ public class Pizza extends AbstractEntity {
     private double valor;
 
     @Getter @Setter
-    @ManyToOne
+    @OneToMany
     @JsonBackReference
     @JoinColumn(name = "sabor", nullable = false)
     private Sabor sabor;

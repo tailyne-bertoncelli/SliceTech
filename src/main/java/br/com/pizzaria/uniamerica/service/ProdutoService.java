@@ -31,8 +31,10 @@ public class ProdutoService {
         List<Produto> produtoList = this.produtoRepository.findAll();
         List<ProdutoDTO> produtoDTOList = new ArrayList<>();
         for (Produto p: produtoList) {
-            var prod = copyToDto(p);
-            produtoDTOList.add(prod);
+            if (p.isAtivo()) {
+                var prod = copyToDto(p);
+                produtoDTOList.add(prod);
+            }
         }
         return produtoDTOList;
     }

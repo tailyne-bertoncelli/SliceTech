@@ -34,7 +34,14 @@ public class PedidoService {
 
     @Transactional(readOnly = true)
     public List<Pedido> findAll(){
-        return pedidosRepository.findAll();
+        List<Pedido> lista = pedidosRepository.findAll();
+        List<Pedido> listaAtivos = pedidosRepository.findAll();
+        for (Pedido ped: lista) {
+            if (ped.isAtivo()){
+                listaAtivos.add(ped);
+            }
+        }
+        return listaAtivos;
     }
 
     @Transactional

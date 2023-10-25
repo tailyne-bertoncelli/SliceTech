@@ -31,8 +31,10 @@ public class UsuarioService {
         List<Usuario> usuarioList = this.usuarioRepository.findAll();
         List<UsuarioDTO> usuarioDTOList = new ArrayList<>();
         for (Usuario users: usuarioList) {
-            var user = copyToDto(users);
-            usuarioDTOList.add(user);
+            if (users.isAtivo()) {
+                var user = copyToDto(users);
+                usuarioDTOList.add(user);
+            }
         }
         return usuarioDTOList;
     }

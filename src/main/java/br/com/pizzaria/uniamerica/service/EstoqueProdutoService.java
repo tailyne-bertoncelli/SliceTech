@@ -28,8 +28,10 @@ public class EstoqueProdutoService {
         List<EstoqueProduto> listaTodos = repository.findAll();
         List<EstoqueProdutoDTO> estoqueProdutoDTOList = new ArrayList<>();
         for (EstoqueProduto e: listaTodos) {
-            EstoqueProdutoDTO estoqueProduto = copyToDto(e);
-            estoqueProdutoDTOList.add(estoqueProduto);
+            if(e.isAtivo()){
+                EstoqueProdutoDTO estoqueProduto = copyToDto(e);
+                estoqueProdutoDTOList.add(estoqueProduto);
+            }
         }
         return estoqueProdutoDTOList;
     }

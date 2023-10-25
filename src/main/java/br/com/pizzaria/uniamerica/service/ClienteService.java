@@ -36,8 +36,10 @@ public class ClienteService {
         List<Cliente> clienteList = this.clienteRepository.findAll();
         List<ClienteDTO> clienteDTOS = new ArrayList<>();
         for (Cliente c: clienteList) {
-            var cliente = copyToDto(c);
-            clienteDTOS.add(cliente);
+            if (c.isAtivo()) {
+                var cliente = copyToDto(c);
+                clienteDTOS.add(cliente);
+            }
         }
         return clienteDTOS;
     }
@@ -51,7 +53,7 @@ public class ClienteService {
                 .orElseThrow(()-> new RuntimeException("Endereco não encontrado!"));
 
 
-        Cliente cliente = new Cliente(usuario,endereco,clienteDTO.getNome());
+        Cliente cliente = new Cliente(usuario,endereco,clienteDTO.getNome(), clienteDTO.getIdade(), clienteDTO.getTelefone(), clienteDTO.getGenero(), clienteDTO.getData_nascimento());
         this.clienteRepository.save(cliente);
         return copyToDto(cliente);
     }
@@ -64,6 +66,10 @@ public class ClienteService {
 
         cliente1.setId(cliente.getId());
         cliente1.setNome(cliente.getNome());
+        cliente1.setIdade(cliente.getIdade());
+        cliente1.setTelefone(cliente.getTelefone());
+        cliente1.setGenero(cliente.getGenero());
+        cliente1.setData_nascimento(cliente.getData_nascimento());
         cliente1.setUsuario(cliente.getUsuario());
         cliente1.setEndereco(cliente.getEndereco());
         cliente1.setPedidoList(cliente.getPedidoList());

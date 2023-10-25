@@ -32,8 +32,10 @@ public class PizzaService {
         List<Pizza> pizzaList = this.pizzaRepository.findAll();
         List<PizzaDTO> pizzaDTOList = new ArrayList<>();
         for (Pizza p: pizzaList) {
-            var pizza = copyToDto(p);
-            pizzaDTOList.add(pizza);
+            if (p.isAtivo()) {
+                var pizza = copyToDto(p);
+                pizzaDTOList.add(pizza);
+            }
         }
         return pizzaDTOList;
     }
